@@ -5,27 +5,17 @@ using UnityEngine;
 
 public class Explosion_PGW : MonoBehaviour
 {
-    public string ExplosionSound;
-    public string CrashSound;
+    [SerializeField] private string ExplosionSound;
+    [SerializeField] private string CrashSound;
 
-    public ParticleSystem ExplosionEffect;
-    Rigidbody rb;
+    [SerializeField] private ParticleSystem ExplosionEffect;
+    private Rigidbody rb;
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    public IEnumerator BoomWall()
-    {
-
-        yield return new WaitForSeconds(3.0f);
-
-        SoundManager_PGW.instance.PlaySE(ExplosionSound);
-        rb.constraints = RigidbodyConstraints.None;
-        rb.AddForce(new Vector3(0,1,1) * 50f, ForceMode.Impulse);
-        CrashWall();
-    }
 
     private void CrashWall()
     {
@@ -45,22 +35,13 @@ public class Explosion_PGW : MonoBehaviour
 
         }
     }
-
-    public IEnumerator StartIgnite()
-    {
-
-        yield return new WaitForSeconds(3.0f);
-        SoundManager_PGW.instance.PlaySE(ExplosionSound);
-        FindExplosion();
-    }
-
-    public void FindExplosion()
+    private void FindExplosion()
     {
         Collider[] coll = Physics.OverlapSphere(transform.position, 10f);
 
         foreach (var col in coll)
         {
-            if (col.transform.tag == "something")
+            if (col.CompareTag("something"))
             {
                 Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
                 col.GetComponent<Rigidbody>().mass = 0.1f;
@@ -68,8 +49,26 @@ public class Explosion_PGW : MonoBehaviour
 
             }
 
-
         }
     }
+    private IEnumerator BoomWall()
+    {
+
+        yield return new WaitForSeconds(3.0f);
+
+        SoundManager_PGW.instance.PlaySE(ExplosionSound);
+        rb.constraints = RigidbodyConstraints.None;
+        rb.AddForce(new Vector3(0,1,1) * 50f, ForceMode.Impulse);
+        CrashWall();
+    }
+
+    private IEnumerator StartIgnite()
+    {
+
+        yield return new WaitForSeconds(3.0f);
+        SoundManager_PGW.instance.PlaySE(ExplosionSound);
+        FindExplosion();
+    }
+
 
 }

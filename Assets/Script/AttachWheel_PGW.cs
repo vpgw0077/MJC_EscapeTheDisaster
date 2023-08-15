@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class AttachWheel_PGW : MonoBehaviour
 {
-    public GameObject CarWheel;
-    public string carSound;
+    [SerializeField] private GameObject carWheel;
 
-    Interact_PGW theInteract;
-    MovingCar_PGW theMovingCar;
+    private Interact_PGW theInteract;
+    private MovingCar_PGW theMovingCar;
 
-    private void Start()
+    private void Awake()
     {
         theInteract = FindObjectOfType<Interact_PGW>();
         theMovingCar = GetComponentInParent<MovingCar_PGW>();
@@ -18,16 +17,15 @@ public class AttachWheel_PGW : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Wheel")
+        if(other.CompareTag("Wheel"))
         {
-            if (theInteract.carrying)
+            if (theInteract.Carrying)
             {
                 theInteract.AutoDrop();
             }
-            SoundManager_PGW.instance.PlaySE(carSound);
-            theMovingCar.isReady = true;
             Destroy(other.gameObject);
-            CarWheel.SetActive(true);
+            theMovingCar.StartEngine();
+            carWheel.SetActive(true);
 
 
         }

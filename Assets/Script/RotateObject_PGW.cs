@@ -3,24 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateObject_PGW : MonoBehaviour
+public class RotateObject_PGW : MonoBehaviour, ITrigger_PGW
 {
 
-    public GameObject Object;
-    public float RotSpeed;
-    public bool isActivate = false;
+    [SerializeField] private GameObject targetObject;
+    [SerializeField] private float rotSpeed;
+    [SerializeField] private string buttonSound;
+
+    private bool isActivate = false;
 
     private void Update()
     {
         if (isActivate)
         {
-            Object.transform.Rotate(0, 90 *Time.deltaTime* RotSpeed, 0, Space.World);
+            RotateObject();
 
         }
 
 
     }
 
-
+    private void RotateObject()
+    {
+        targetObject.transform.Rotate(0, 90 * Time.deltaTime * rotSpeed, 0, Space.World);
+    }
+    public void Trigger()
+    {
+        SoundManager_PGW.instance.PlaySE(buttonSound);
+        isActivate = !isActivate;
+    }
 
 }

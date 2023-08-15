@@ -4,30 +4,31 @@ using UnityEngine;
 
 public class CamController_PGW : MonoBehaviour
 {
-    public float mouseSensitivity;
-    public Transform targetTransform;
-    public Transform cameraTransform;
-    public Transform cameraPivotTransform;
-    public SkinnedMeshRenderer targetRender;
-    public bool changeTransparency = true;
-    Transform myTransform;
-    Vector3 cameraTransformPosition;
-    Vector3 cameraFollowVelocity = Vector3.zero;
+    [SerializeField] private Transform targetTransform;
+    [SerializeField] private Transform cameraTransform;
+    [SerializeField] private Transform cameraPivotTransform;
 
-    public float lookSpeed = 0.1f;
-    public float followSpeed = 0.1f;
-    public float pivotSpeed = 0.03f;
+    [SerializeField] private SkinnedMeshRenderer targetRender;
 
-    float targetPosition;
-    float defaultPosition;
-    float lookAngle;
-    float pivotAngle;
-    public float minimumPivot = -35;
-    public float maximumPivot = 35;
+    [SerializeField] private bool changeTransparency = true;
 
-    public float cameraSphereRadius = 0.2f;
-    public float cameraCollisionOffset = 0.2f;
-    public float minimumCollisionOffset = 0.2f;
+    [SerializeField] private float mouseSensitivity;
+    [SerializeField] private float lookSpeed = 0.1f;
+    [SerializeField] private float followSpeed = 0.1f;
+    [SerializeField] private float pivotSpeed = 0.03f;
+    [SerializeField] private float minimumPivot = -35;
+    [SerializeField] private float maximumPivot = 35;
+    [SerializeField] private float cameraSphereRadius = 0.2f;
+    [SerializeField] private float cameraCollisionOffset = 0.2f;
+    [SerializeField] private float minimumCollisionOffset = 0.2f;
+
+    private Transform myTransform;
+    private Vector3 cameraTransformPosition;
+    private Vector3 cameraFollowVelocity = Vector3.zero;
+    private float targetPosition;
+    private float defaultPosition;
+    private float lookAngle;
+    private float pivotAngle;
 
     private void Awake()
     {
@@ -35,7 +36,12 @@ public class CamController_PGW : MonoBehaviour
         defaultPosition = cameraTransform.localPosition.z;
     }
 
-    public void FollowTarget(float delta)
+   private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+    private void FollowTarget(float delta)
     {
         Vector3 targetPosition = Vector3.Lerp(myTransform.position, targetTransform.position, delta / followSpeed);
         myTransform.position = targetPosition;
@@ -43,7 +49,7 @@ public class CamController_PGW : MonoBehaviour
         HandleCameraCollision(delta);
     }
 
-    public void HandleCameraRotation(float delta, float mouseXInput, float mouseYInput)
+    private void HandleCameraRotation(float delta, float mouseXInput, float mouseYInput)
     {
         lookAngle += Input.GetAxis("Mouse X") * mouseXInput;
         pivotAngle -= Input.GetAxis("Mouse Y") * mouseYInput;
@@ -59,14 +65,10 @@ public class CamController_PGW : MonoBehaviour
 
         targetRotation = Quaternion.Euler(rotation);*/
         targetTransform.rotation = Quaternion.Euler(0, lookAngle, 0);
-         cameraPivotTransform.localRotation = Quaternion.Euler(pivotAngle, lookAngle, 0);
+        cameraPivotTransform.localRotation = Quaternion.Euler(pivotAngle, lookAngle, 0);
     }
     // Start is called before the first frame update
-    void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
+
     private void FixedUpdate()
     {
         float delta = Time.fixedDeltaTime;
@@ -75,7 +77,7 @@ public class CamController_PGW : MonoBehaviour
         HandleCameraRotation(delta, mouseSensitivity, mouseSensitivity);
     }
 
-    void HandleCameraCollision(float delta)
+    private void HandleCameraCollision(float delta)
     {
         targetPosition = defaultPosition;
         RaycastHit hit;
@@ -112,17 +114,17 @@ public class CamController_PGW : MonoBehaviour
         if (Mathf.Abs(targetPosition) < minimumCollisionOffset)
         {
             targetPosition = -minimumCollisionOffset;
-            
+
 
 
         }
         cameraTransformPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, delta / 0.2f);
         cameraTransform.localPosition = cameraTransformPosition;
 
-        }
-
-
     }
+
+
+}
 
 
 

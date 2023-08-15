@@ -4,30 +4,26 @@ using UnityEngine;
 
 public class CountDNA_PGW : MonoBehaviour
 {
-    StageClear_PGW Stage;
+    private StageClear_PGW stage;
 
-    private void Start()
+    private void Awake()
     {
-        Stage = GetComponentInParent<StageClear_PGW>();
+        stage = GetComponentInParent<StageClear_PGW>();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag == "VirusDNA")
+        if (other.transform.CompareTag("VirusDNA"))
         {
-            Stage.dnaCount += 1;
-            Stage.CheckDna();
+            stage.IncreaseCount();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.tag == "VirusDNA")
+        if (other.transform.CompareTag("VirusDNA"))
         {
-            Stage.dnaCount -= 1;
-            if (Stage.isOpen)
-            {
-                Stage.CloseDoor();
-            }
+            stage.DecreaseCount();
+
         }
     }
 

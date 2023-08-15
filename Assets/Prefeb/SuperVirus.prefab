@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DNA: {fileID: 4050614536015336743, guid: bcf4ee6b0514da94aaac2efd54e1867b, type: 3}
-  virus: 1
+  virusType: 1
 --- !u!1001 &6943698299166288635
 PrefabInstance:
   m_ObjectHideFlags: 0

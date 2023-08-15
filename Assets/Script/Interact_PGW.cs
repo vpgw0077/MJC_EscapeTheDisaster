@@ -4,23 +4,50 @@ using UnityEngine;
 
 public class Interact_PGW : MonoBehaviour
 {
-    public GameObject Face; // 캐릭터의 얼굴, Ray가 나오는 위치
-    public float InteractDistance;
-    public float ThrowForce;
-    public GameObject PickPosition; // 오브젝트를 집었을 때 위치
-    public bool carrying;
-    Vector3 objectPos;
-    BoxCollider PickCollision;
-    public GameObject carriedObject;
-    public LayerMask layermask;
+    [SerializeField] private Transform rayStartPos; // 캐릭터의 얼굴, Ray가 나오는 위치
+    [SerializeField] private Transform pickPosition; // 오브젝트를 집었을 때 위치
+    [SerializeField] private float interactDistance;
+    [SerializeField] private float throwForce;
+    [SerializeField] private LayerMask layermask;
 
-    public string ButtonSound;
-    float distance;
+    private Vector3 objectPos;
+    private BoxCollider pickCollision;
+    private GameObject carriedObject;
+    public GameObject CarriedObject
+    {
+        get
+        {
+            return carriedObject;
+        }
+
+        private set
+        {
+            carriedObject = value;
+        }
+    }
+
+    private bool carrying;
+
+   
+    public bool Carrying
+    {
+        get
+        {
+            return carrying;
+        }
+
+        private set
+        {
+            carrying = value;
+        }
+    }
+
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        PickCollision = PickPosition.GetComponent<BoxCollider>();
+        pickCollision = pickPosition.GetComponent<BoxCollider>();
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("PickPosition"), LayerMask.NameToLayer("Item"), true);
     }
 
 
@@ -28,10 +55,10 @@ public class Interact_PGW : MonoBehaviour
     void Update()
     {
 
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("PickPosition"), LayerMask.NameToLayer("Item"), true);
-        if (carrying)
+
+        if (Carrying)
         {
-            carry(carriedObject);
+            carry(CarriedObject);
             TryThrow(); // 던지기
             TryDrop(); // 내려놓기
             Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Item"), true);
@@ -39,85 +66,50 @@ public class Interact_PGW : MonoBehaviour
         }
         else
         {
-            PickUp(); // 집기
+            Interact();
             Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Item"), false);
 
         }
     }
 
-    void carry(GameObject o)
+    void carry(GameObject carryObject)
     {
 
-        o.transform.position = PickPosition.transform.position;
+        carryObject.transform.position = pickPosition.position;
     }
-    void PickUp()
+    void Interact()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             RaycastHit hit;
 
 
-            Debug.DrawRay(Face.transform.position, Face.transform.forward, Color.red, InteractDistance);
-            if (Physics.Raycast(Face.transform.position, Face.transform.forward, out hit, InteractDistance, layermask))
+            if (Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, layermask))
             {
 
-                PickUpAble_PGW p = hit.collider.GetComponent<PickUpAble_PGW>(); // 레이에 맞은 오브젝트가 PickUpAble_PGW 스크립트 컴포넌트가 있으면 집기실행
-                if (p != null)
+                PickUpAbleObject_PGW pickUpObject = hit.collider.GetComponent<PickUpAbleObject_PGW>();
+                ITrigger_PGW trigger = hit.collider.GetComponent<ITrigger_PGW>();
+                if (pickUpObject != null)
                 {
 
-                    carrying = true;
-                    carriedObject = p.gameObject;
-                    p.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                    p.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-                    p.GetComponent<Rigidbody>().useGravity = false;
-                    p.GetComponent<Rigidbody>().detectCollisions = true;
-                    p.transform.SetParent(PickPosition.transform);
-                    PickCollision.enabled = true;
+                    Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
+
+                    Carrying = true;
+                    CarriedObject = pickUpObject.gameObject;
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.useGravity = false;
+                    rb.transform.SetParent(pickPosition);
+                    pickCollision.enabled = true;
 
                 }
 
-
-
-                else if (hit.transform.tag == "PipeSwitch")
+                else if(trigger!= null)
                 {
-                    SoundManager_PGW.instance.PlaySE(ButtonSound);
-                    hit.transform.GetComponent<RotateObject_PGW>().isActivate = !hit.transform.GetComponent<RotateObject_PGW>().isActivate;
-
-
-                }
-                else if (hit.transform.tag == "DoorSwitch")
-                {
-                    SoundManager_PGW.instance.PlaySE(ButtonSound);
-                    hit.transform.GetComponent<DoorSwitch_PGW>().OpenDoor();
-                }
-                else if (!hit.transform.GetComponent<DoorSwitch_PGW>().Up && !hit.transform.GetComponent<DoorSwitch_PGW>().Down)
-                {
-
-                    if (hit.transform.tag == "EleSwitch")
-                    {
-                        SoundManager_PGW.instance.PlaySE(ButtonSound);
-                        if (hit.transform.GetComponent<DoorSwitch_PGW>().isPowerOn)
-                        {
-                            if (hit.transform.GetComponent<DoorSwitch_PGW>().ReadyToUp)
-                            {
-                                hit.transform.GetComponent<DoorSwitch_PGW>().Up = true;
-                                hit.transform.GetComponent<DoorSwitch_PGW>().ElevatorState();
-
-                            }
-                            else if (hit.transform.GetComponent<DoorSwitch_PGW>().ReadyToDown)
-                            {
-                                hit.transform.GetComponent<DoorSwitch_PGW>().Down = true;
-                                hit.transform.GetComponent<DoorSwitch_PGW>().ElevatorState();
-
-                            }
-                        }
-
-
-                    }
+                    trigger.Trigger();
                 }
 
-
-
+            
 
             }
         }
@@ -128,12 +120,12 @@ public class Interact_PGW : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
 
-            carriedObject.GetComponent<Rigidbody>().useGravity = true;
-            carriedObject.GetComponent<Rigidbody>().AddForce(PickPosition.transform.forward * ThrowForce);
-            carriedObject.transform.SetParent(null);
-            carrying = false;
-            carriedObject = null;
-            PickCollision.enabled = false;
+            CarriedObject.GetComponent<Rigidbody>().useGravity = true;
+            CarriedObject.GetComponent<Rigidbody>().AddForce(pickPosition.forward * throwForce);
+            CarriedObject.transform.SetParent(null);
+            Carrying = false;
+            CarriedObject = null;
+            pickCollision.enabled = false;
         }
     }
 
@@ -142,25 +134,25 @@ public class Interact_PGW : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            objectPos = carriedObject.transform.position;
-            carriedObject.transform.SetParent(null);
-            carriedObject.GetComponent<Rigidbody>().useGravity = true;
-            carriedObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            carriedObject.transform.position = objectPos;
-            carrying = false;
-            carriedObject = null;
-            PickCollision.enabled = false;
+            //objectPos = carriedObject.transform.position;
+            CarriedObject.transform.SetParent(null);
+            CarriedObject.GetComponent<Rigidbody>().useGravity = true;
+            CarriedObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            //carriedObject.transform.position = objectPos;
+            Carrying = false;
+            CarriedObject = null;
+            pickCollision.enabled = false;
 
         }
     }
 
     public void AutoDrop()
     {
-        carriedObject.GetComponent<Rigidbody>().useGravity = true;
-        carriedObject.transform.SetParent(null);
-        carrying = false;
-        carriedObject = null;
-        PickCollision.enabled = false;
+        CarriedObject.GetComponent<Rigidbody>().useGravity = true;
+        CarriedObject.transform.SetParent(null);
+        CarriedObject = null;
+        Carrying = false;
+        pickCollision.enabled = false;
     }
 }
 

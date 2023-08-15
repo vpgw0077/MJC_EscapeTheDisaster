@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class FallDown_PGW : MonoBehaviour
 {
-    Rigidbody rb;
+   [SerializeField] private float torqueForce = 1000f;
+
+    private Rigidbody rb;
     // Start is called before the first frame update
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.tag == "Car")
+        if(collision.transform.CompareTag("Car"))
         {
-            rb = GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.None;
-            rb.AddTorque(transform.right * 1000f);
+            rb.AddTorque(transform.right * torqueForce);
         }
     }
 

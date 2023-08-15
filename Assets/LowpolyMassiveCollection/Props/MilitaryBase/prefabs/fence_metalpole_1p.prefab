@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 408682}
   - component: {fileID: 3308682}
   - component: {fileID: 2308682}
+  - component: {fileID: 875891366}
   m_Layer: 0
   m_Name: fence_metalpole1
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 448150}
@@ -77,6 +78,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &875891366
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108682}
+  m_Material: {fileID: 13400000, guid: cc281b5af27536d4baf3d22600abb82f, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6020727, y: 9.7175255, z: 0.6180908}
+  m_Center: {x: 0, y: 4.794922, z: -0.00000044703484}
 --- !u!1 &148150
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,7 +100,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 448150}
-  - component: {fileID: 13624890}
   m_Layer: 0
   m_Name: fence_metalpole_1p
   m_TagString: Untagged
@@ -103,23 +116,9 @@ Transform:
   m_GameObject: {fileID: 148150}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.25, y: 0, z: -1.7}
-  m_LocalScale: {x: 3, y: 2.5, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 408682}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &13624890
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148150}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.2
-  m_Height: 3.24
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.62, z: 0}

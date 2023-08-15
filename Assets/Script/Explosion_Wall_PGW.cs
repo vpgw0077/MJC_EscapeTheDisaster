@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Explosion_Wall_PGW : MonoBehaviour
 {
-    public GameObject Debric;
-    public float Force;
-    public Vector3 offset = Vector3.zero;
-    // Start is called before the first frame update
+    [SerializeField] private GameObject Debric;
+    [SerializeField] private float Force;
 
+    private Vector3 offset = Vector3.zero;
     public void WallExplosion()
     {
         GameObject clone = Instantiate(Debric, transform.position, Quaternion.identity);
@@ -17,7 +16,7 @@ public class Explosion_Wall_PGW : MonoBehaviour
         for (int i = 0; i < rb.Length; i++)
         {
             rb[i].AddExplosionForce(Force, transform.position + offset, 10f);
-           // col[i].enabled = false;
+            // col[i].enabled = false;
         }
         gameObject.SetActive(false);
     }

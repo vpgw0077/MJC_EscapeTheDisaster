@@ -18,10 +18,10 @@ public class SoundManager_PGW : MonoBehaviour
     public Sound[] EffectSounds;
 
     public string[] playSoundName;
-    
+
     private void Awake()
     {
-        if( instance == null)
+        if (instance == null)
         {
             instance = this;
             //DontDestroyOnLoad(gameObject);
@@ -33,16 +33,8 @@ public class SoundManager_PGW : MonoBehaviour
     }
     private void Start()
     {
-        StartCoroutine(SoundOn());
+
         playSoundName = new string[audioSourceEffect.Length];
-    }
-    public IEnumerator SoundOn()
-    {
-        yield return new WaitForSeconds(3f);
-        for (int i = 0; i < audioSourceEffect.Length; i++)
-        {
-            audioSourceEffect[i].volume = 1;
-        }
     }
 
 
@@ -50,7 +42,7 @@ public class SoundManager_PGW : MonoBehaviour
     {
         for (int i = 0; i < EffectSounds.Length; i++)
         {
-            if(_name == EffectSounds[i].name)
+            if (_name == EffectSounds[i].name)
             {
                 for (int j = 0; j < audioSourceEffect.Length; j++)
                 {
@@ -80,13 +72,16 @@ public class SoundManager_PGW : MonoBehaviour
     {
         for (int i = 0; i < audioSourceEffect.Length; i++)
         {
-            if(playSoundName[i] == _name)
+            if (playSoundName[i] == _name)
             {
-            audioSourceEffect[i].Stop();
+                audioSourceEffect[i].Stop();
                 return;
 
             }
         }
     }
+
+   
+
 
 }

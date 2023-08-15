@@ -25,6 +25,7 @@ TagManager:
   - Renton
   - Wheel
   - Vaccine
+  - LightRock
   layers:
   - Default
   - TransparentFX
@@ -41,7 +42,7 @@ TagManager:
   - Item
   - PickPosition
   - Switch
-  - 
+  - Air
   - 
   - 
   - 

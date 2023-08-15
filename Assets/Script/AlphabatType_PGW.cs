@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class AlphabatType_PGW : MonoBehaviour
 {
-    public string AlphabatType;
-
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private string alphabatType;
+    public string AlphabatType
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        get
+        {
+            return alphabatType;
+        }
     }
 }

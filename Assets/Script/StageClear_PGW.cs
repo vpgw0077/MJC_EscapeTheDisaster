@@ -3,41 +3,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageClear_PGW : MonoBehaviour
+public class StageClear_PGW : DoorAndBridgeManager_PGW
 {
-    public Animator anim;
-    public bool isOpen;
-    public int dnaCount;
-    public int RequireDna;
-    public string DoorSound;
+    [SerializeField] private bool isOpen;
+    [SerializeField] private int dnaCount;
+    [SerializeField] private int RequireDna;
 
-    // Update is called once per frame
-    private void Update()
+    public void IncreaseCount()
     {
-
-
-    }
-    public void CheckDna()
-    {
+        dnaCount++;
         if (RequireDna == dnaCount)
         {
             OpenDoor();
         }
-    }
 
-    public void CloseDoor()
+    }
+    public void DecreaseCount()
     {
-        isOpen = false;
-        SoundManager_PGW.instance.PlaySE(DoorSound);
-        anim.SetBool("OpenDoor", false);
+        dnaCount--;
+        if (isOpen)
+        {
+            CloseDoor();
+        }
+
     }
 
     private void OpenDoor()
     {
         isOpen = true;
-        SoundManager_PGW.instance.PlaySE(DoorSound);
-        anim.SetBool("OpenDoor", true);
-
+        StopAllCoroutines();
+        StartCoroutine("TurnOn");
 
     }
+    private void CloseDoor()
+    {
+        isOpen = false;
+        StopAllCoroutines();
+        StartCoroutine("TurnOff");
+    }
+
 }

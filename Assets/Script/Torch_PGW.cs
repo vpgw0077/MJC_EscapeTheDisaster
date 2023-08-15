@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Torch_PGW : MonoBehaviour
 {
-    public GameObject FireEffect;
-    public bool isOnFire = false;
+    [SerializeField] private GameObject FireEffect;
+
+    private bool isOnFire = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "FireZone")
+        if(other.CompareTag("FireZone"))
         {
             FireEffect.SetActive(true);
             isOnFire = true;
         }
-        if(isOnFire && other.tag == "Barrel")
+
+        if(isOnFire && other.CompareTag("Barrel"))
         {
             other.gameObject.GetComponent<Explosion_PGW>().StartCoroutine("BoomWall");
         }

@@ -2,79 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorSwitch_PGW : MonoBehaviour
+public class DoorSwitch_PGW : MonoBehaviour, ITrigger_PGW
 {
-    public Animator anim;
-    public bool isPowerOn = true;
-    public bool Up;
-    public bool ReadyToUp;
-    public bool ReadyToDown;
-    public bool Down;
-    public string LiftSound;
-    public string ElevatorSound;
+    [SerializeField] private Animator anim;
+    [SerializeField] private string buttonSound;
+    [SerializeField] private string doorSound;
 
-    private void Start()
+    private bool isOpen = false;
+
+    public void Trigger()
     {
-
+        anim.SetTrigger("Generate");
+        PlaySound();
+        isOpen = true;
     }
 
-    private void Update()
+    private void PlaySound()
     {
-        if (!ReadyToDown)
+        SoundManager_PGW.instance.PlaySE(buttonSound);
+
+        if (!isOpen)
         {
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Up"))
-            {
-
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
-                {
-                    SoundManager_PGW.instance.StopAllSE();
-                    SoundManager_PGW.instance.PlaySE(LiftSound);
-                    Up = false;
-                    ReadyToUp = false;
-                    ReadyToDown = true;
-                }
-            }
-
-        }
-        if (!ReadyToUp)
-        {
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
-            {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
-                {
-                    SoundManager_PGW.instance.StopAllSE();
-                    SoundManager_PGW.instance.PlaySE(LiftSound);
-                    Down = false;
-                    ReadyToUp = true;
-                    ReadyToDown = false;
-                }
-            }
-
-        }
-
-
-    }
-    public void ElevatorState()
-    {
-        if (Up && ReadyToUp)
-        {
-            anim.SetBool("Up", true);
-            SoundManager_PGW.instance.PlaySE(ElevatorSound);
-
-
-        }
-        if (Down && ReadyToDown)
-        {
-            anim.SetBool("Up", false);
-            SoundManager_PGW.instance.PlaySE(ElevatorSound);
-
+            SoundManager_PGW.instance.PlaySE(doorSound);
         }
     }
-
-    public void OpenDoor()
-    {
-        anim.SetBool("OpenDoor", true);
-    }
-
-
 }

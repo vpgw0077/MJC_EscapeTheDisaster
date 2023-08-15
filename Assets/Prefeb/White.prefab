@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1522374748596251454}
   - component: {fileID: 5957672541643412930}
   - component: {fileID: 2987232493629810874}
-  - component: {fileID: 136156547188839251}
+  - component: {fileID: 8997885014884716579}
   m_Layer: 12
   m_Name: White
   m_TagString: White
@@ -87,7 +87,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1522374748598187518}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b51cfa42e4e589649abb9420f06937da, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -109,7 +109,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &136156547188839251
+--- !u!114 &8997885014884716579
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,4 +121,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0871056556de4f34b81d8db4ec712931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OriginPos: {x: 0, y: 0, z: 0}

@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class WhiteBlockZone_PGW : MonoBehaviour
 {
-    Interact_PGW theInteract;
-    private void Start()
+    private Interact_PGW theInteract;
+    private void Awake()
     {
         theInteract = FindObjectOfType<Interact_PGW>();
     }
     private void OnTriggerEnter(Collider other)
     {
-        PickUpAble_PGW p = other.GetComponent<PickUpAble_PGW>();
-        if (p != null && other.tag == "White")
+        PickUpAbleObject_PGW pickUpObject = other.GetComponent<PickUpAbleObject_PGW>();
+        if (pickUpObject != null && other.CompareTag("White"))
         {
-            if (theInteract.carrying)
+            if (theInteract.Carrying)
             {
                 theInteract.AutoDrop();
             }
-            p.RespawnZone();
+            pickUpObject.RespawnObject();
         }
     }
 }

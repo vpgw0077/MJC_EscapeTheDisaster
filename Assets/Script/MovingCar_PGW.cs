@@ -5,12 +5,14 @@ using UnityEngine;
 public class MovingCar_PGW : MonoBehaviour
 
 {
-    public float Speed;
-    public bool isReady;
-    public string CrashSound;
-    Rigidbody rb;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float speed;
+    [SerializeField] private string crashSound;
+    [SerializeField] private string carSound;
+
+    private bool isReady;
+    private Rigidbody rb;
+
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
@@ -20,19 +22,21 @@ public class MovingCar_PGW : MonoBehaviour
     {
         if (isReady)
         {
-
-            rb.MovePosition(transform.position + transform.forward * Speed * Time.deltaTime);
+            rb.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
         }
     }
-
+    public void StartEngine()
+    {
+        isReady = true;
+        SoundManager_PGW.instance.PlaySE(carSound);
+    }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.tag == "Renton")
+        if(collision.transform.CompareTag("Renton"))
         {
             isReady = false;
             SoundManager_PGW.instance.StopAllSE();
-            SoundManager_PGW.instance.PlaySE(CrashSound);
-            //rb.constraints = RigidbodyConstraints.FreezePosition;
+            SoundManager_PGW.instance.PlaySE(crashSound);
         }
     }
 }

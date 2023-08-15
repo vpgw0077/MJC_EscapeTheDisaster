@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class RespawnZoneSetting_PGW : MonoBehaviour
 {
-    Respawn_PGW theRespawn;
+    private PlayerRespawnZone_PGW theRespawn;
 
-    private void Start()
+    private void Awake()
     {
-        theRespawn = FindObjectOfType<Respawn_PGW>();
+        theRespawn = FindObjectOfType<PlayerRespawnZone_PGW>();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.CompareTag("Player"))
         {
-            theRespawn.Respawn.RemoveAt(0);
+            theRespawn.respawnZoneList.RemoveAt(0);
             //theRespawn.nextRespawn = ++theRespawn.nextRespawn % theRespawn.Respawn.Count;
             Destroy(gameObject);
         }
