@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4050614536015563015}
   - component: {fileID: 4050614536012138791}
   - component: {fileID: 4050614536013138919}
-  - component: {fileID: 9204165963308823835}
   - component: {fileID: 316073932816730211}
   - component: {fileID: 3239664941292761994}
+  - component: {fileID: 5173338094683119660}
   m_Layer: 12
   m_Name: VirusDna
   m_TagString: VirusDNA
@@ -80,19 +80,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &9204165963308823835
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4050614536015336743}
-  m_Material: {fileID: 13400000, guid: b51cfa42e4e589649abb9420f06937da, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.8451177
-  m_Center: {x: 0.0059323325, y: -0.02709788, z: 0.046280086}
 --- !u!54 &316073932816730211
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -121,3 +108,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0871056556de4f34b81d8db4ec712931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &5173338094683119660
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4050614536015336743}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.3, y: 3.3, z: 3.3}
+  m_Center: {x: 0, y: 0, z: 0}

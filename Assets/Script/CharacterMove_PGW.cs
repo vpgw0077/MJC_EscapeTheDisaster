@@ -20,7 +20,7 @@ public class CharacterMove_PGW : MonoBehaviour
     private float walkAudioTimer = 0f;
     private float walkAudioPeriod = 0.6f;
     private float jumpForce => theInteract.Carrying ? 5f : 10f;
- 
+
 
     private readonly float maxSpeed = 8f;
     private readonly Vector3 boxCastSize = new Vector3(0.3f, 0.1f, 0.3f);
@@ -82,13 +82,13 @@ public class CharacterMove_PGW : MonoBehaviour
         else if (h == 0 && v == 0) return;
 
         walkAudioTimer -= Time.deltaTime;
-        if(walkAudioTimer <= 0)
+        if (walkAudioTimer <= 0)
         {
             int index = Random.Range(0, walkClip.Length);
             audioPlayer.PlayOneShot(walkClip[index]);
             walkAudioTimer = walkAudioPeriod;
         }
-        
+
 
     }
     private void ActOnGround()

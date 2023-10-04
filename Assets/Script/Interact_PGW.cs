@@ -10,6 +10,7 @@ public class Interact_PGW : MonoBehaviour
     [SerializeField] private float throwForce;
     [SerializeField] private LayerMask layermask;
 
+    private Rigidbody carryObjectRigidBody;
     private Vector3 objectPos;
     private BoxCollider pickCollision;
     private GameObject carriedObject;
@@ -92,14 +93,15 @@ public class Interact_PGW : MonoBehaviour
                 if (pickUpObject != null)
                 {
 
-                    Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
+                    carryObjectRigidBody = pickUpObject.GetComponent<Rigidbody>();
 
                     Carrying = true;
                     CarriedObject = pickUpObject.gameObject;
-                    rb.velocity = Vector3.zero;
-                    rb.angularVelocity = Vector3.zero;
-                    rb.useGravity = false;
-                    rb.transform.SetParent(pickPosition);
+                    carryObjectRigidBody.velocity = Vector3.zero;
+                    carryObjectRigidBody.angularVelocity = Vector3.zero;
+                    carryObjectRigidBody.useGravity = false;
+                    carryObjectRigidBody.constraints = RigidbodyConstraints.FreezeAll;
+                    carryObjectRigidBody.transform.SetParent(pickPosition);
                     pickCollision.enabled = true;
 
                 }
@@ -120,8 +122,9 @@ public class Interact_PGW : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
 
-            CarriedObject.GetComponent<Rigidbody>().useGravity = true;
-            CarriedObject.GetComponent<Rigidbody>().AddForce(pickPosition.forward * throwForce);
+            carryObjectRigidBody.constraints = RigidbodyConstraints.None;
+            carryObjectRigidBody.useGravity = true;
+            carryObjectRigidBody.AddForce(pickPosition.forward * throwForce);
             CarriedObject.transform.SetParent(null);
             Carrying = false;
             CarriedObject = null;
@@ -134,10 +137,11 @@ public class Interact_PGW : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            carryObjectRigidBody.constraints = RigidbodyConstraints.None;
             //objectPos = carriedObject.transform.position;
             CarriedObject.transform.SetParent(null);
-            CarriedObject.GetComponent<Rigidbody>().useGravity = true;
-            CarriedObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            carryObjectRigidBody.useGravity = true;
+            carryObjectRigidBody.velocity = Vector3.zero;
             //carriedObject.transform.position = objectPos;
             Carrying = false;
             CarriedObject = null;
@@ -148,7 +152,8 @@ public class Interact_PGW : MonoBehaviour
 
     public void AutoDrop()
     {
-        CarriedObject.GetComponent<Rigidbody>().useGravity = true;
+        carryObjectRigidBody.constraints = RigidbodyConstraints.None;
+        carryObjectRigidBody.useGravity = true;
         CarriedObject.transform.SetParent(null);
         CarriedObject = null;
         Carrying = false;

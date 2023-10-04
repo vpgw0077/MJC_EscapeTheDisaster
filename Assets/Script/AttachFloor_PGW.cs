@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class AttachFloor_PGW : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+
+    private void OnCollisionEnter(Collision other)
     {
-        if(other.tag != "Player" && other.tag !="PickPosition")
+        if (other.transform.tag != "Player" || other.transform.tag != "PickPosition")
         {
-            other.transform.SetParent(gameObject.transform,true);
-            
+            other.transform.SetParent(gameObject.transform, true);
+
         }
     }
-    private void OnTriggerExit(Collider other)
+
+    private void OnCollisionExit(Collision other)
     {
+        if (other.transform.tag != "Player" || other.transform.tag != "PickPosition")
         {
-            if (other.tag != "Player" && other.tag != "PickPosition")
-            {
-                other.transform.SetParent(null);
-            }
+            other.transform.SetParent(null);
+
         }
     }
+
 }

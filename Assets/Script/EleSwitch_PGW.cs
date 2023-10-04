@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class EleSwitch_PGW : MonoBehaviour, ITrigger_PGW
 {
-    [SerializeField] private Animator anim;
+    private Transform currentPosition;
+
+    [SerializeField] private Transform targetObject;
+    [SerializeField] private Transform upperPosition;
+    [SerializeField] private Transform downPosition;
+
+    [SerializeField] private float speed;
     [SerializeField] private bool isMoving;
 
     [Header("AudioSource")]
@@ -15,34 +21,44 @@ public class EleSwitch_PGW : MonoBehaviour, ITrigger_PGW
     [SerializeField] private AudioClip buttonAudioClip;
     [SerializeField] private AudioClip elevatorAudioClip;
     [SerializeField] private AudioClip liftAudioClip;
- 
+
     public bool isPowerOn = true;
 
     private void Awake()
     {
         buttonAudioSource.clip = buttonAudioClip;
+        currentPosition = downPosition;
     }
-    private void Update()
+
+    private IEnumerator ElevatorOn(Transform targetPosition)
     {
-
-
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Up") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0 && anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f||
-            anim.GetCurrentAnimatorStateInfo(0).IsName("Down") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0 && anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f)
+        while (targetObject.position != targetPosition.position)
         {
+            targetObject.position = Vector3.MoveTowards(targetObject.position, targetPosition.position, speed * Time.deltaTime);
             isMoving = true;
+            yield return null;
+
         }
 
-        if (isMoving && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-
-            isMoving = false;
-            elevatorAudioSource.Stop();
-            elevatorAudioSource.clip = liftAudioClip;
-            elevatorAudioSource.Play();
-        }
+        elevatorAudioSource.Stop();
+        elevatorAudioSource.clip = liftAudioClip;
+        elevatorAudioSource.Play();
+        isMoving = false;
 
     }
 
+    private Transform CheckTargetPosition()
+    {
+        if (currentPosition == downPosition)
+        {
+            currentPosition = upperPosition;
+            return upperPosition;
+        }
+
+        currentPosition = downPosition;
+        return downPosition;
+
+    }
     public void Trigger()
     {
         buttonAudioSource.Play();
@@ -50,7 +66,7 @@ public class EleSwitch_PGW : MonoBehaviour, ITrigger_PGW
 
         if (isPowerOn)
         {
-            anim.SetTrigger("Generate");
+            StartCoroutine(ElevatorOn(CheckTargetPosition()));
             elevatorAudioSource.clip = elevatorAudioClip;
             elevatorAudioSource.Play();
 

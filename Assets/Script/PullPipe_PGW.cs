@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PullPipe_PGW : AirController_PGW
+public class PullPipe_PGW 
 {
-    [SerializeField] private float rockAirForce;
+    /*[SerializeField] private float rockAirForce;
     private Rigidbody rockRigidbody;
 
     protected override void OnTriggerEnter(Collider other)
@@ -43,5 +43,5 @@ public class PullPipe_PGW : AirController_PGW
             rb.AddForce(transform.up * airForce,ForceMode.Force);
 
         }
-    }
+    }*/
 }

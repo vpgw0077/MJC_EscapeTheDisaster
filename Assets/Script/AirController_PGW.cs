@@ -6,7 +6,6 @@ public abstract class AirController_PGW : MonoBehaviour
 {
 
     [SerializeField] protected float airForce;
-    [SerializeField] protected bool blocked;
     [SerializeField] protected Rigidbody rb;
 
 

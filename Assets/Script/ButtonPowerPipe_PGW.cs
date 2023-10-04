@@ -29,7 +29,6 @@ public class ButtonPowerPipe_PGW : MonoBehaviour
             Rigidbody Piperb = other.GetComponent<Rigidbody>();
             other.transform.position = theBox.transform.position;
             other.transform.rotation = theBox.transform.rotation;
-            Piperb.isKinematic = true;
             Piperb.constraints = RigidbodyConstraints.FreezePosition;
             Piperb.freezeRotation = true;
 
@@ -46,7 +45,6 @@ public class ButtonPowerPipe_PGW : MonoBehaviour
         {
             Rigidbody Piperb = other.GetComponent<Rigidbody>();
             Piperb.constraints = RigidbodyConstraints.None;
-            Piperb.isKinematic = false;
             Piperb.freezeRotation = false;
 
             pipeAudioSource.PlayOneShot(pipeAudioClip);

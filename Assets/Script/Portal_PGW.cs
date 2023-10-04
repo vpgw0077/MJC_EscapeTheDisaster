@@ -50,7 +50,7 @@ public class Portal_PGW : MonoBehaviour
             {
                 theInteract.AutoDrop();
             }
-            collision.transform.position = otherPortal.transform.position + otherPortal.transform.forward * 2f;
+            collision.transform.position = otherPortal.transform.position + otherPortal.transform.forward;
             ChangePortal();
             otherPortal.ChangePortal();
 
@@ -63,7 +63,7 @@ public class Portal_PGW : MonoBehaviour
             {
                 theInteract.AutoDrop();
             }
-            collision.transform.position = otherPortal.transform.position + otherPortal.transform.forward * 2f;
+            collision.transform.position = otherPortal.transform.position + otherPortal.transform.forward;
             ChangePortal();
             otherPortal.ChangePortal();
         }

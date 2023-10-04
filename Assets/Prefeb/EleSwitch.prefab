@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &75389481
 Transform:
@@ -97,7 +97,7 @@ GameObject:
   m_TagString: EleSwitch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4896065085175918323
 Transform:
@@ -4190,18 +4190,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36be34f939d711546acd975a0acfff4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  targetObject: {fileID: 0}
+  upperPosition: {fileID: 0}
+  downPosition: {fileID: 0}
+  speed: 5
   isMoving: 0
-  readyToDown: 0
-  liftSound: LiftEnd
-  elevatorSound: Elevator
-  buttonSound: PressButton
   buttonAudioSource: {fileID: 450160894}
   elevatorAudioSource: {fileID: 0}
   buttonAudioClip: {fileID: 8300000, guid: 739c79decf21aae4ca5fe2f2bae97ad8, type: 3}
   elevatorAudioClip: {fileID: 8300000, guid: 981d6e50450670143b7e621f4061543b, type: 3}
   liftAudioClip: {fileID: 8300000, guid: c4210254adf55b2418a48110d80bfaaa, type: 3}
-  isPowerOn: 1
+  isPowerOn: 0
 --- !u!65 &7574128465924788829
 BoxCollider:
   m_ObjectHideFlags: 0

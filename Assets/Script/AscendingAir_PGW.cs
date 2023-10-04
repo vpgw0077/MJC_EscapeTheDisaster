@@ -5,7 +5,7 @@ using System;
 
 public class AscendingAir_PGW : AirController_PGW
 {
-
+    private bool blocked;
     private AscendingAirControll_PGW theAir;
 
     private void Awake()
