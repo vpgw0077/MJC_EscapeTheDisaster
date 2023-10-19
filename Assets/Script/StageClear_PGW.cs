@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageClear_PGW : DoorAndBridgeManager_PGW
+public class StageClear_PGW : MovingObject_PGW
 {
     [SerializeField] private bool isOpen;
     [SerializeField] private int dnaCount;
@@ -32,14 +32,14 @@ public class StageClear_PGW : DoorAndBridgeManager_PGW
     {
         isOpen = true;
         StopAllCoroutines();
-        StartCoroutine("TurnOn");
+        StartCoroutine(TurnOn(CheckTargetPosition()));
 
     }
     private void CloseDoor()
     {
         isOpen = false;
         StopAllCoroutines();
-        StartCoroutine("TurnOff");
+        StartCoroutine(TurnOn(CheckTargetPosition()));
     }
 
 }

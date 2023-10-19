@@ -2,46 +2,86 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PullPipe_PGW 
+public class PullPipe_PGW : MonoBehaviour
 {
-    /*[SerializeField] private float rockAirForce;
+    [SerializeField] private AirComponent_PGW theAirComponent;
+
+    [SerializeField] private float rockAirForce;
+    [SerializeField] private float rayLength;
+
+    [SerializeField] private Transform rayStartPosition;
+    [SerializeField] private LayerMask layerMask;
+
+
+    private RaycastHit hit;
+    private bool blocked;
     private Rigidbody rockRigidbody;
 
-    protected override void OnTriggerEnter(Collider other)
+    private void Awake()
     {
-
-        if (other.transform.CompareTag("Rock"))
+        rayLength = 7f;
+    }
+    private void OnDrawGizmos()
+    {
+        Debug.DrawRay(rayStartPosition.position, transform.right * rayLength, Color.blue);
+    }
+    private void Update()
+    {
+        if (Physics.Raycast(rayStartPosition.position, transform.right, out hit, rayLength, layerMask))
         {
-            rockRigidbody = other.GetComponent<Rigidbody>();
-            blocked = true;
-
+            if (hit.transform.CompareTag("Rock"))
+            {
+                blocked = true;
+            }
         }
         else
         {
-            rb = other.GetComponent<Rigidbody>();
-        }
-    }
-
-    protected override void OnTriggerExit(Collider other)
-    {
-        if (other.transform.CompareTag("Rock"))
-        {
             blocked = false;
         }
+
+    }
+    private void FixedUpdate()
+    {
+
+        if (theAirComponent.objectRigidbody.Count != 0 && !blocked)
+        {
+            foreach (Rigidbody rb in theAirComponent.objectRigidbody)
+            {
+                rb.AddForce((transform.position - rb.position).normalized * theAirComponent.airForce, ForceMode.Force);
+            }
+        }
+
+        if (rockRigidbody != null)
+        {
+            rockRigidbody.AddForce((transform.position - rockRigidbody.position).normalized * rockAirForce, ForceMode.Force);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (blocked) return;
+
+        if (other.CompareTag("Rock"))
+        {
+            rockRigidbody = other.GetComponent<Rigidbody>();
+            rockRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        }
+        else if (!other.CompareTag("Rock") && other.GetComponent<Rigidbody>() != null)
+        {
+            theAirComponent.objectRigidbody.Add(other.GetComponent<Rigidbody>());
+
+        }
     }
 
-    protected override void OnTriggerStay(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.transform.CompareTag("Rock"))
+        if (other.CompareTag("Rock"))
         {
-            rockRigidbody.AddForce(transform.up * rockAirForce, ForceMode.Force);
+            rockRigidbody.constraints = RigidbodyConstraints.None;
+            rockRigidbody = null;
         }
-
-        if (blocked) return;
-        if (rb != null)
+        else if (!other.CompareTag("Rock") && other.GetComponent<Rigidbody>() != null)
         {
-            rb.AddForce(transform.up * airForce,ForceMode.Force);
-
+            theAirComponent.objectRigidbody.Remove(other.GetComponent<Rigidbody>());
         }
-    }*/
+    }
 }

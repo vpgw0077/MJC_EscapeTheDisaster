@@ -13,6 +13,13 @@ public class AscendingAir_PGW : AirController_PGW
         theAir = transform.GetComponentInParent<AscendingAirControll_PGW>();
     }
 
+    protected override void FixedUpdate()
+    {
+        if(somethingDetect && !blocked)
+        {
+            rb.AddForce(transform.up * airForce, ForceMode.Force);
+        }
+    }
     protected override void OnTriggerEnter(Collider other)
     {
 
@@ -22,10 +29,10 @@ public class AscendingAir_PGW : AirController_PGW
             theAir.IncreseHeight();
         }
 
-        else if (other.CompareTag("Player"))
+        else
         {
+            somethingDetect = true;
             rb = other.GetComponent<Rigidbody>();
-
         }
 
     }
@@ -38,17 +45,10 @@ public class AscendingAir_PGW : AirController_PGW
             theAir.DecreseHeight();
 
         }
-    }
-    protected override void OnTriggerStay(Collider other)
-    {
-        if (blocked) return;
-
-        if (other.CompareTag("Player"))
+        else
         {
-            rb.AddForce(transform.up * airForce,ForceMode.Force);
-
+            somethingDetect = false;
         }
     }
-
 
 }

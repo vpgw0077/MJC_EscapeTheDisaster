@@ -8,7 +8,7 @@ public class MenuManager_PGW : MonoBehaviour
     [SerializeField] private GameObject player;
 
     private bool isStop = false;
-    private PickUpAbleObject_PGW[] theItem;
+    private Respawnable_PGW[] theItem;
     private PlayerRespawnZone_PGW theRespawn;
 
     // Start is called before the first frame update
@@ -55,8 +55,8 @@ public class MenuManager_PGW : MonoBehaviour
     public void LoadCheckPoint()
     {
         player.transform.position = theRespawn.respawnZoneList[0].position;
-        theItem = FindObjectsOfType<PickUpAbleObject_PGW>();
-        foreach (PickUpAbleObject_PGW item in theItem)
+        theItem = FindObjectsOfType<Respawnable_PGW>();
+        foreach (Respawnable_PGW item in theItem)
         {
             item.RespawnObject();
         }

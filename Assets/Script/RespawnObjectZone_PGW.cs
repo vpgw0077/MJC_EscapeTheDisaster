@@ -11,12 +11,12 @@ public class RespawnObjectZone_PGW : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        PickUpAbleObject_PGW pickUpObject = other.GetComponent<PickUpAbleObject_PGW>();
+        Respawnable_PGW pickUpObject = other.GetComponent<Respawnable_PGW>();
         if(pickUpObject != null)
         {
             if (ReferenceEquals(theInteract.CarriedObject, pickUpObject.gameObject))
             {
-                theInteract.AutoDrop();
+                theInteract.TryDrop();
             }
             pickUpObject.RespawnObject();
         }

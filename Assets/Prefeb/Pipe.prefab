@@ -12,11 +12,13 @@ GameObject:
   - component: {fileID: 963573026877242493}
   - component: {fileID: 963573026877242492}
   - component: {fileID: 963573026877242495}
-  - component: {fileID: 963573026877242494}
   - component: {fileID: 963573026877242481}
   - component: {fileID: 963573026877242480}
   - component: {fileID: 963573026877242483}
   - component: {fileID: 963573026877242482}
+  - component: {fileID: 114117429411725404}
+  - component: {fileID: 914957240}
+  - component: {fileID: 7607638224809910177}
   m_Layer: 12
   m_Name: Pipe
   m_TagString: Pipe
@@ -33,7 +35,7 @@ Transform:
   m_GameObject: {fileID: 963573026877242485}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -158.366, y: 15, z: 50.277}
-  m_LocalScale: {x: 1.2, y: 1, z: 1.2000005}
+  m_LocalScale: {x: 1.5, y: 1, z: 1.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -63,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e461850e7aa546744bd2a1dbda7c685a, type: 2}
+  - {fileID: 2100000, guid: bae1f4105d0d64447961dda43be3add9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1024,20 +1026,6 @@ MonoBehaviour:
   - a: 35
     b: 34
   m_SelectedVertices: 20000000210000002200000023000000
---- !u!64 &963573026877242494
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963573026877242485}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 0}
 --- !u!54 &963573026877242481
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1048,10 +1036,10 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 2
+  m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &963573026877242480
@@ -1177,3 +1165,42 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114117429411725404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963573026877242485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9687ee25170fa440be5945a428f6235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pipeAudioSource: {fileID: 963573026877242482}
+  pipeAudioClip: {fileID: 8300000, guid: 839a8d579eeef2b45a3ac2f14d253f16, type: 3}
+--- !u!65 &914957240
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963573026877242485}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.27135256, y: 2.5, z: 0.28531694}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7607638224809910177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963573026877242485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076dd73c9fed98f4daafa619fc250fb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

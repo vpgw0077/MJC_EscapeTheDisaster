@@ -48,7 +48,7 @@ public class Portal_PGW : MonoBehaviour
 
             if (ReferenceEquals(theInteract.CarriedObject,collision.gameObject))
             {
-                theInteract.AutoDrop();
+                theInteract.TryDrop();
             }
             collision.transform.position = otherPortal.transform.position + otherPortal.transform.forward;
             ChangePortal();
@@ -61,7 +61,7 @@ public class Portal_PGW : MonoBehaviour
 
             if (ReferenceEquals(theInteract.CarriedObject, collision.gameObject))
             {
-                theInteract.AutoDrop();
+                theInteract.TryDrop();
             }
             collision.transform.position = otherPortal.transform.position + otherPortal.transform.forward;
             ChangePortal();

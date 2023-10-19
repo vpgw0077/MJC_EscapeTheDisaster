@@ -14,7 +14,7 @@ public class WallBreak_PGW : MonoBehaviour
     [SerializeField] private AudioSource audioPlayer;
     [SerializeField] private AudioClip crashSound;
 
-   private float requireForce = 10f;
+    private float requireForce = 100f;
     private const int targetCount = 4;
 
     private BoxCollider theBoxCollider;
@@ -52,14 +52,15 @@ public class WallBreak_PGW : MonoBehaviour
                 wallDebris.SetActive(true);
                 audioPlayer.Play();
                 break;
-               
-            
+
+
         }
     }
+
+
     private void OnCollisionEnter(Collision collision)
-    {
-        Rigidbody rb = collision.transform.GetComponent<Rigidbody>();
-        if(collision.transform.CompareTag("LightRock")&& rb.velocity.magnitude >= requireForce)
+    {      
+        if (collision.transform.CompareTag("LightRock") && collision.relativeVelocity.magnitude >= requireForce)
         {
             CrackWall();
         }

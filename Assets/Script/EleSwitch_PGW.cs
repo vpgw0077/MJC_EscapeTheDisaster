@@ -2,35 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EleSwitch_PGW : MonoBehaviour, ITrigger_PGW
+public class EleSwitch_PGW : MovingObject_PGW, ITrigger_PGW
 {
-    private Transform currentPosition;
-
-    [SerializeField] private Transform targetObject;
-    [SerializeField] private Transform upperPosition;
-    [SerializeField] private Transform downPosition;
-
-    [SerializeField] private float speed;
-    [SerializeField] private bool isMoving;
-
-    [Header("AudioSource")]
-    [SerializeField] private AudioSource buttonAudioSource;
+    [Space]
     [SerializeField] private AudioSource elevatorAudioSource;
 
-    [Header("AudioClip")]
-    [SerializeField] private AudioClip buttonAudioClip;
     [SerializeField] private AudioClip elevatorAudioClip;
     [SerializeField] private AudioClip liftAudioClip;
 
-    public bool isPowerOn = true;
+    [Space]
+    [SerializeField] private ButtonPowerPipe_PGW buttonPower;
+    [SerializeField] private bool isMoving;
+
+
 
     private void Awake()
     {
-        buttonAudioSource.clip = buttonAudioClip;
-        currentPosition = downPosition;
+        currentPosition = originPosition;
     }
 
-    private IEnumerator ElevatorOn(Transform targetPosition)
+
+    protected override IEnumerator TurnOn(Transform targetPosition)
     {
         while (targetObject.position != targetPosition.position)
         {
@@ -41,34 +33,19 @@ public class EleSwitch_PGW : MonoBehaviour, ITrigger_PGW
         }
 
         elevatorAudioSource.Stop();
-        elevatorAudioSource.clip = liftAudioClip;
-        elevatorAudioSource.Play();
+        elevatorAudioSource.PlayOneShot(liftAudioClip);
         isMoving = false;
-
-    }
-
-    private Transform CheckTargetPosition()
-    {
-        if (currentPosition == downPosition)
-        {
-            currentPosition = upperPosition;
-            return upperPosition;
-        }
-
-        currentPosition = downPosition;
-        return downPosition;
 
     }
     public void Trigger()
     {
-        buttonAudioSource.Play();
+        theAudioSource.PlayOneShot(theAudioClip);
         if (isMoving) return;
 
-        if (isPowerOn)
+        if (buttonPower.IsPowerOn)
         {
-            StartCoroutine(ElevatorOn(CheckTargetPosition()));
-            elevatorAudioSource.clip = elevatorAudioClip;
-            elevatorAudioSource.Play();
+            StartCoroutine(TurnOn(CheckTargetPosition()));
+            elevatorAudioSource.PlayOneShot(elevatorAudioClip);
 
         }
 

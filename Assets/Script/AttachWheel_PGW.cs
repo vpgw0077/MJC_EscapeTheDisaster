@@ -21,7 +21,7 @@ public class AttachWheel_PGW : MonoBehaviour
         {
             if (theInteract.Carrying)
             {
-                theInteract.AutoDrop();
+                theInteract.TryDrop();
             }
             Destroy(other.gameObject);
             theMovingCar.StartEngine();

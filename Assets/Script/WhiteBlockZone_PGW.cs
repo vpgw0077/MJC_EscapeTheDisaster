@@ -11,12 +11,12 @@ public class WhiteBlockZone_PGW : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        PickUpAbleObject_PGW pickUpObject = other.GetComponent<PickUpAbleObject_PGW>();
+        Respawnable_PGW pickUpObject = other.GetComponent<Respawnable_PGW>();
         if (pickUpObject != null && other.CompareTag("White"))
         {
             if (theInteract.Carrying)
             {
-                theInteract.AutoDrop();
+                theInteract.TryDrop();
             }
             pickUpObject.RespawnObject();
         }

@@ -9,7 +9,7 @@ public class AttachFloor_PGW : MonoBehaviour
     {
         if (other.transform.tag != "Player" || other.transform.tag != "PickPosition")
         {
-            other.transform.SetParent(gameObject.transform, true);
+            other.transform.SetParent(gameObject.transform);
 
         }
     }

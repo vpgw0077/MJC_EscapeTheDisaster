@@ -5,14 +5,21 @@ using UnityEngine;
 
 public class RotateObject_PGW : MonoBehaviour, ITrigger_PGW
 {
+    [SerializeField] private AudioSource theAudioSource;
+    [SerializeField] private AudioClip theAudioClip;
 
-    [SerializeField] private GameObject targetObject;
+    [SerializeField] private ButtonPowerPipe_PGW buttonPower;
+    [SerializeField] private Rigidbody targetObject;
     [SerializeField] private float rotSpeed;
-    [SerializeField] private string buttonSound;
 
+    Vector3 rot;
     private bool isActivate = false;
 
-    private void Update()
+    private void Awake()
+    {
+        rot = new Vector3(0, rotSpeed, 0);
+    }
+    /*private void Update()
     {
         if (isActivate)
         {
@@ -20,17 +27,27 @@ public class RotateObject_PGW : MonoBehaviour, ITrigger_PGW
 
         }
 
+    }*/
+    private void FixedUpdate()
+    {
+        if (isActivate)
+        {
+        Quaternion deltaRotation = Quaternion.Euler(rot * Time.fixedDeltaTime);
+        targetObject.MoveRotation(targetObject.rotation  * deltaRotation);
 
+        }
     }
-
     private void RotateObject()
     {
         targetObject.transform.Rotate(0, 90 * Time.deltaTime * rotSpeed, 0, Space.World);
     }
     public void Trigger()
     {
-        SoundManager_PGW.instance.PlaySE(buttonSound);
-        isActivate = !isActivate;
+        theAudioSource.PlayOneShot(theAudioClip);
+        if (buttonPower.IsPowerOn)
+        {
+            isActivate = !isActivate;
+        }
     }
 
 }

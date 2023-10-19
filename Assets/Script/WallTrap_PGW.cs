@@ -12,18 +12,35 @@ public class WallTrap_PGW : MonoBehaviour
     [SerializeField] private float activateSpeed = 100f;
     [SerializeField] private float deactivateSpeed = 10f;
 
-    private Vector3 randomTorque;
+    [SerializeField] private Rigidbody playerRigidbody;
+    [SerializeField] private Rigidbody propRigidbody;
 
+    private Vector3 randomTorque;
+    private bool detectPlayer;
+    private bool detectProps;
     private bool isActivate = false; // 충돌 판정이 가능한지 판단
     private bool isReady = true; // 함정이 작동 될 준비가 됐는지 판단
 
+    private void FixedUpdate()
+    {
+        if (detectPlayer)
+        {
+            playerRigidbody.AddForce(gameObject.transform.forward * playerPushPower, ForceMode.Impulse);
+
+        }
+        else if (detectProps)
+        {
+            propRigidbody.AddForce(gameObject.transform.forward * propPushPower, ForceMode.Impulse);
+            propRigidbody.AddTorque(randomTorque, ForceMode.Impulse);
+
+        }
+    }
     public IEnumerator ActivateTrap()
     {
         if (!isReady) yield break;
 
         isActivate = true;
         isReady = false;
-
         while (gameObject.transform.position != after.position)
         {
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, after.position, activateSpeed * Time.deltaTime);
@@ -49,28 +66,35 @@ public class WallTrap_PGW : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         if (!isActivate) return;
-        Rigidbody rigidbody = collision.transform.GetComponent<Rigidbody>();
 
-        if (rigidbody != null)
+        if (collision.CompareTag("Player"))
         {
-            if (collision.CompareTag("Player"))
-            {
-                rigidbody.AddForce(gameObject.transform.forward * playerPushPower  * Time.deltaTime, ForceMode.VelocityChange);
+            playerRigidbody = collision.transform.GetComponent<Rigidbody>();
+            detectPlayer = true;
+        }
+        else
+        {
+            propRigidbody = collision.transform.GetComponent<Rigidbody>();
+            randomTorque.x = Random.Range(0, 180);
+            randomTorque.y = Random.Range(0, 180);
+            randomTorque.z = Random.Range(0, 180);
+            detectProps = true;
 
-            }
-            else
-            {
-                randomTorque.x = Random.Range(0, 180);
-                randomTorque.y = Random.Range(0, 180);
-                randomTorque.z = Random.Range(0, 180);
-                rigidbody.AddForce(gameObject.transform.forward * propPushPower, ForceMode.Impulse);
-                rigidbody.AddTorque(randomTorque, ForceMode.Impulse);
 
-            }
         }
 
 
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            detectPlayer = false;
+        }
+        else
+        {
+            detectProps = false;
+        }
+    }
 
 }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 316073932816730211}
   - component: {fileID: 3239664941292761994}
   - component: {fileID: 5173338094683119660}
+  - component: {fileID: 114180900618035744}
   m_Layer: 12
   m_Name: VirusDna
   m_TagString: VirusDNA
@@ -121,3 +122,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.3, y: 3.3, z: 3.3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114180900618035744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4050614536015336743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076dd73c9fed98f4daafa619fc250fb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

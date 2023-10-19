@@ -56,8 +56,9 @@ public class CharacterMove_PGW : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         rb.AddForce(direction * accacceleration * Time.deltaTime, ForceMode.VelocityChange);
-        if (rb.velocity.magnitude >= maxSpeed)
+        if (rb.velocity.magnitude >= maxSpeed && isGrounded)
         {
             velXZ = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             velY = new Vector3(0, rb.velocity.y, 0);
@@ -95,7 +96,7 @@ public class CharacterMove_PGW : MonoBehaviour
     {
         if (isGrounded)
         {
-            rb.drag = 1f;
+      
             accacceleration = 30f;
 
             if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
@@ -106,8 +107,7 @@ public class CharacterMove_PGW : MonoBehaviour
 
         else
         {
-            accacceleration = 20f;
-            rb.drag = 0f;
+            accacceleration = 1f;
         }
     }
     private void CalculateMoveValue()
