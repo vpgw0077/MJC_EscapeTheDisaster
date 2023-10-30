@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Interact_PGW : MonoBehaviour
 {
-    [SerializeField] private Transform rayStartPos; // 캐릭터의 얼굴, Ray가 나오는 위치
-    [SerializeField] private Transform pickPosition; // 오브젝트를 집었을 때 위치
+    [SerializeField] private Transform rayStartPos = null;
+    [SerializeField] private Transform pickPosition = null;
 
-    [SerializeField] private float interactDistance;
-    [SerializeField] private float throwForce;
-    [SerializeField] private float objectMoveSpeed;
-    [SerializeField] private float maxCarryDistance;
+    [SerializeField] private float interactDistance = 0;
+    [SerializeField] private float throwForce = 0;
+    [SerializeField] private float objectMoveSpeed = 0;
+    [SerializeField] private float maxCarryDistance = 0;
 
     [SerializeField] private LayerMask layermask;
 
@@ -113,6 +113,7 @@ public class Interact_PGW : MonoBehaviour
             Physics.IgnoreCollision(playerCollider, carryObjectCollider, true);
 
             Carrying = true;
+            carryObjectRigidBody.constraints = RigidbodyConstraints.None;
             carryObjectRigidBody.transform.position = pickPosition.position;
             carryObjectRigidBody.useGravity = false;
             carryObjectRigidBody.velocity = Vector3.zero;

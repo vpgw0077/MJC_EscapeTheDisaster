@@ -5,9 +5,9 @@ using UnityEngine;
 public class MovingCar_PGW : MonoBehaviour
 
 {
-    [SerializeField] private float speed;
-    [SerializeField] private string crashSound;
-    [SerializeField] private string carSound;
+    [SerializeField] private float speed = 0;
+    [SerializeField] private string crashSound = null;
+    [SerializeField] private string carSound = null;
 
     private bool isReady;
     private Rigidbody rb;

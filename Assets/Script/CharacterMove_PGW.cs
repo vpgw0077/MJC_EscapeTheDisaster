@@ -3,26 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class CharacterMove_PGW : MonoBehaviour
+public class CharacterMove_PGW : MonoBehaviour, IState_PGW<CharacterMove_PGW.playerState>
 {
-    [SerializeField] private AudioSource audioPlayer;
-    [SerializeField] private AudioClip[] walkClip;
+    public enum playerState
+    {
+        Controlable,
+        OutOfControl
+    }
+
+    [SerializeField] private AudioSource audioPlayer = null;
+    [SerializeField] private AudioClip[] walkClip = null;
+    [SerializeField] private playerState PlayerState = playerState.Controlable;
+    [SerializeField] private float deceleration = 0f;
 
     private bool isGrounded = true;
     private bool isJumping = false;
 
-    private float h;
-    private float v;
-    private float animationHorizontal;
-    private float animationVertical;
-    private float accacceleration = 30f;
+    private float h = 0;
+    private float v = 0;
+    private float animationHorizontal = 0;
+    private float animationVertical = 0;
     private float groundRayLength = 1.5f;
     private float walkAudioTimer = 0f;
     private float walkAudioPeriod = 0.6f;
+    private float acceleration => isGrounded ? 30f : 5f;
     private float jumpForce => theInteract.Carrying ? 5f : 10f;
+    private float maxSpeed => PlayerState == playerState.Controlable ? 8f : 100f;
+    private float maxSpeedY = 80f;
 
-
-    private readonly float maxSpeed = 8f;
     private readonly Vector3 boxCastSize = new Vector3(0.3f, 0.1f, 0.3f);
 
     private Vector3 direction;
@@ -47,29 +55,40 @@ public class CharacterMove_PGW : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ActOnGround();
         CheckGround();
         CalculateMoveValue();
-        PlayWalkSound();
+
+        if (isGrounded)
+        {
+            TryJump();
+            PlayWalkSound();
+
+        }
 
     }
 
     private void FixedUpdate()
     {
-
-        rb.AddForce(direction * accacceleration * Time.deltaTime, ForceMode.VelocityChange);
-        if (rb.velocity.magnitude >= maxSpeed && isGrounded)
+        if (direction != Vector3.zero)
         {
-            velXZ = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            velY = new Vector3(0, rb.velocity.y, 0);
+            rb.AddForce(direction * acceleration * Time.fixedDeltaTime, ForceMode.VelocityChange);
+            if (rb.velocity.magnitude >= maxSpeed)
+            {
+                velXZ = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                velY = new Vector3(0, rb.velocity.y, 0);
 
-            velXZ = Vector3.ClampMagnitude(velXZ, maxSpeed);
-            velY = Vector3.ClampMagnitude(velY, float.MaxValue);
+                velXZ = Vector3.ClampMagnitude(velXZ, maxSpeed);
+                velY = Vector3.ClampMagnitude(velY, maxSpeedY);
 
-            rb.velocity = velXZ + velY;
+                rb.velocity = velXZ + velY;
+            }
+
         }
-
-
+        else
+        {
+            rb.velocity = new Vector3(rb.velocity.x * deceleration, rb.velocity.y, rb.velocity.z * deceleration); // 감속
+        }
+         
         if (isJumping)
         {
             Jump();
@@ -79,10 +98,10 @@ public class CharacterMove_PGW : MonoBehaviour
 
     private void PlayWalkSound()
     {
-        if (!isGrounded) return;
-        else if (h == 0 && v == 0) return;
+        if (h == 0 && v == 0) return;
 
         walkAudioTimer -= Time.deltaTime;
+
         if (walkAudioTimer <= 0)
         {
             int index = Random.Range(0, walkClip.Length);
@@ -92,23 +111,13 @@ public class CharacterMove_PGW : MonoBehaviour
 
 
     }
-    private void ActOnGround()
+    private void TryJump()
     {
-        if (isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
         {
-      
-            accacceleration = 30f;
-
-            if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
-            {
-                isJumping = true;
-            }
+            isJumping = true;
         }
 
-        else
-        {
-            accacceleration = 1f;
-        }
     }
     private void CalculateMoveValue()
     {
@@ -119,6 +128,7 @@ public class CharacterMove_PGW : MonoBehaviour
 
         anim.SetFloat("Horizontal", animationHorizontal);
         anim.SetFloat("Vertical", animationVertical);
+
         direction = (transform.right * h + transform.forward * v).normalized;
 
     }
@@ -145,4 +155,12 @@ public class CharacterMove_PGW : MonoBehaviour
 
 
     }
+
+    public IEnumerator ChangeState(playerState state, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        PlayerState = state;
+    }
+
+
 }

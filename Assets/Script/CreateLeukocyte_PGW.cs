@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CreateLeukocyte_PGW : MonoBehaviour
 {
-    [SerializeField] private GameObject leukocyte;
-    [SerializeField] private Transform spawnPosition;
+    [SerializeField] private GameObject leukocyte = null;
+    [SerializeField] private Transform spawnPosition = null;
 
     private bool isTriggerEnd;
 

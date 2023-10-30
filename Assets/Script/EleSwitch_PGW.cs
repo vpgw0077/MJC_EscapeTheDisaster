@@ -5,14 +5,14 @@ using UnityEngine;
 public class EleSwitch_PGW : MovingObject_PGW, ITrigger_PGW
 {
     [Space]
-    [SerializeField] private AudioSource elevatorAudioSource;
+    [SerializeField] private AudioSource elevatorAudioSource = null;
 
-    [SerializeField] private AudioClip elevatorAudioClip;
-    [SerializeField] private AudioClip liftAudioClip;
+    [SerializeField] private AudioClip elevatorAudioClip = null;
+    [SerializeField] private AudioClip liftAudioClip = null;
 
     [Space]
-    [SerializeField] private ButtonPowerPipe_PGW buttonPower;
-    [SerializeField] private bool isMoving;
+    [SerializeField] private ButtonPowerPipe_PGW buttonPower = null;
+    [SerializeField] private bool isMoving = false;
 
 
 

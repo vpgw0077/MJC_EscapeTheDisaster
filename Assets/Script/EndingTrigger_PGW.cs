@@ -10,8 +10,8 @@ public class EndingTrigger_PGW : MonoBehaviour
         HappyEnding,
         BadEnding
     }
-    [SerializeField] private Animator anim;
-    [SerializeField] private EndingType endingType;
+    [SerializeField] private Animator anim = null;
+    [SerializeField] private EndingType endingType = EndingType.BadEnding;
 
     private CharacterMove_PGW thePlayer;
 

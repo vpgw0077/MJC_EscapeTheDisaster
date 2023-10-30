@@ -6,30 +6,25 @@ public class PullPipe_PGW : MonoBehaviour
 {
     [SerializeField] private AirComponent_PGW theAirComponent;
 
-    [SerializeField] private float rockAirForce;
-    [SerializeField] private float rayLength;
+    [SerializeField] private float rockAirForce = 0f;
 
-    [SerializeField] private Transform rayStartPosition;
-    [SerializeField] private LayerMask layerMask;
-
-
-    private RaycastHit hit;
     private bool blocked;
     private Rigidbody rockRigidbody;
 
     private void Awake()
     {
-        rayLength = 7f;
+        theAirComponent.rayLength = 7f;
+        theAirComponent.layerMask = 1 << 11;
     }
     private void OnDrawGizmos()
     {
-        Debug.DrawRay(rayStartPosition.position, transform.right * rayLength, Color.blue);
+        Debug.DrawRay(theAirComponent.rayStartPosition.position, transform.right * theAirComponent.rayLength, Color.blue);
     }
     private void Update()
     {
-        if (Physics.Raycast(rayStartPosition.position, transform.right, out hit, rayLength, layerMask))
+        if (Physics.Raycast(theAirComponent.rayStartPosition.position, transform.right, out theAirComponent.hit, theAirComponent.rayLength, theAirComponent.layerMask, QueryTriggerInteraction.Ignore))
         {
-            if (hit.transform.CompareTag("Rock"))
+            if (theAirComponent.hit.transform.CompareTag("Rock"))
             {
                 blocked = true;
             }

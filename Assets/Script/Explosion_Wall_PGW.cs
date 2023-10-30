@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Explosion_Wall_PGW : MonoBehaviour
 {
-    [SerializeField] private GameObject Debric;
-    [SerializeField] private float Force;
+    [SerializeField] private GameObject Debric = null;
+    [SerializeField] private float Force = 0;
 
     private Vector3 offset = Vector3.zero;
     public void WallExplosion()

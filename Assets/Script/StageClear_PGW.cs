@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class StageClear_PGW : MovingObject_PGW
 {
-    [SerializeField] private bool isOpen;
-    [SerializeField] private int dnaCount;
-    [SerializeField] private int RequireDna;
+    [SerializeField] private bool isOpen = false;
+    [SerializeField] private int dnaCount = 0;
+    [SerializeField] private int RequireDna = 0;
 
     public void IncreaseCount()
     {

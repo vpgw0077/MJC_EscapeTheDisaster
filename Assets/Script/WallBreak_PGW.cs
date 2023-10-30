@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class WallBreak_PGW : MonoBehaviour
 {
-    [SerializeField] private GameObject currentWallObject;
-    [SerializeField] private GameObject[] wallPreset;
+    [SerializeField] private GameObject currentWallObject = null;
+    [SerializeField] private GameObject[] wallPreset = null;
     [Space]
-    [SerializeField] private GameObject wallDebris;
-    [SerializeField] private int currentCount;
+    [SerializeField] private GameObject wallDebris = null;
+    [SerializeField] private int currentCount = 0;
 
     [Header("AudioComponent")]
-    [SerializeField] private AudioSource audioPlayer;
-    [SerializeField] private AudioClip crashSound;
+    [SerializeField] private AudioSource audioPlayer = null;
+    [SerializeField] private AudioClip crashSound = null;
 
     private float requireForce = 100f;
-    private const int targetCount = 4;
+    private const int targetCount = 3;
 
     private BoxCollider theBoxCollider;
     // Start is called before the first frame update
@@ -40,7 +40,7 @@ public class WallBreak_PGW : MonoBehaviour
                 currentWallObject.SetActive(true);
                 break;
 
-            case 3:
+            case 2:
                 currentWallObject.SetActive(false);
                 currentWallObject = wallPreset[2];
                 currentWallObject.SetActive(true);

@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Explosion_PGW : MonoBehaviour
 {
-    [SerializeField] private string ExplosionSound;
-    [SerializeField] private string CrashSound;
+    [SerializeField] private string ExplosionSound = null;
+    [SerializeField] private string CrashSound = null;
 
-    [SerializeField] private ParticleSystem ExplosionEffect;
+    [SerializeField] private ParticleSystem ExplosionEffect = null;
     private Rigidbody rb;
 
     private void Awake()

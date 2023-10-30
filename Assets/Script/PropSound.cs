@@ -4,26 +4,28 @@ using UnityEngine;
 
 public class PropSound : MonoBehaviour
 {
-    [SerializeField] private AudioSource audioPlayer;
-    [SerializeField] private AudioClip[] sfx;
+    [SerializeField] private AudioSource audioPlayer = null;
+    [SerializeField] private AudioClip[] sfx = null;
 
-    private Rigidbody rb;
+    [Space]
+    [SerializeField] private float targetSpeed;
+
 
     private void Awake()
     {
         audioPlayer = GetComponent<AudioSource>();
-        rb = GetComponent<Rigidbody>();
+
 
     }
-
     private void OnCollisionEnter(Collision collision)
     {
-        if (rb.velocity.magnitude >= 2f)
+        if (collision.relativeVelocity.magnitude >= targetSpeed)
         {
             int index = Random.Range(0, sfx.Length);
             audioPlayer.PlayOneShot(sfx[index]);
 
         }
+
     }
 
 }

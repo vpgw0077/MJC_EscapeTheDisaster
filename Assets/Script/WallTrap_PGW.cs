@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class WallTrap_PGW : MonoBehaviour
 {
-    [SerializeField] private Transform origin;
-    [SerializeField] private Transform after;
+    [SerializeField] private Transform origin = null;
+    [SerializeField] private Transform after = null;
 
     [SerializeField] private float propPushPower = 50f;
     [SerializeField] private float playerPushPower = 1000f;
     [SerializeField] private float activateSpeed = 100f;
     [SerializeField] private float deactivateSpeed = 10f;
+    [SerializeField] private float knockBackDuration = 0f;
 
-    [SerializeField] private Rigidbody playerRigidbody;
-    [SerializeField] private Rigidbody propRigidbody;
+    [SerializeField] private Rigidbody playerRigidbody = null;
+    [SerializeField] private Rigidbody propRigidbody = null;
 
-    private Vector3 randomTorque;
-    private bool detectPlayer;
-    private bool detectProps;
+    private Vector3 randomTorque = Vector3.zero;
+    private bool detectPlayer = false;
+    private bool detectProps = false;
     private bool isActivate = false; // 충돌 판정이 가능한지 판단
     private bool isReady = true; // 함정이 작동 될 준비가 됐는지 판단
 
@@ -70,6 +71,8 @@ public class WallTrap_PGW : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerRigidbody = collision.transform.GetComponent<Rigidbody>();
+            IState_PGW<CharacterMove_PGW.playerState> state = collision.GetComponent<IState_PGW<CharacterMove_PGW.playerState>>();
+            StartCoroutine(state.ChangeState(CharacterMove_PGW.playerState.OutOfControl, 0));
             detectPlayer = true;
         }
         else
@@ -89,6 +92,8 @@ public class WallTrap_PGW : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            IState_PGW<CharacterMove_PGW.playerState> state = other.GetComponent<IState_PGW<CharacterMove_PGW.playerState>>();
+            StartCoroutine(state.ChangeState(CharacterMove_PGW.playerState.Controlable, knockBackDuration));
             detectPlayer = false;
         }
         else

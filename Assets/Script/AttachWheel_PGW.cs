@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttachWheel_PGW : MonoBehaviour
 {
-    [SerializeField] private GameObject carWheel;
+    [SerializeField] private GameObject carWheel = null;
 
     private Interact_PGW theInteract;
     private MovingCar_PGW theMovingCar;

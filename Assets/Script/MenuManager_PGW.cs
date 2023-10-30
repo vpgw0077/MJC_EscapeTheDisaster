@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MenuManager_PGW : MonoBehaviour
 {
-    [SerializeField] private GameObject optionUI;
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject optionUI = null;
+    [SerializeField] private GameObject player = null;
 
     private bool isStop = false;
     private Respawnable_PGW[] theItem;

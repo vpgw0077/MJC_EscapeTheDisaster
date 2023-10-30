@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class CamController_PGW : MonoBehaviour
 {
-    [SerializeField] private Transform targetTransform;
-    [SerializeField] private Transform cameraTransform;
-    [SerializeField] private Transform cameraPivotTransform;
+    [SerializeField] private Transform targetTransform = null;
+    [SerializeField] private Transform cameraTransform = null;
+    [SerializeField] private Transform cameraPivotTransform = null;
 
-    [SerializeField] private SkinnedMeshRenderer targetRender;
+    [SerializeField] private SkinnedMeshRenderer targetRender = null;
 
     [SerializeField] private bool changeTransparency = true;
 
-    [SerializeField] private float mouseSensitivity;
+    [SerializeField] private float mouseSensitivity = 0;
     [SerializeField] private float lookSpeed = 0.1f;
     [SerializeField] private float followSpeed = 0.1f;
     [SerializeField] private float pivotSpeed = 0.03f;

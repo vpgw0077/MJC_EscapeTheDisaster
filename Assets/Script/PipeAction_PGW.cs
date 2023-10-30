@@ -5,8 +5,8 @@ using UnityEngine;
 public class PipeAction_PGW : MonoBehaviour
 {
 
-    [SerializeField] private AudioSource pipeAudioSource;
-    [SerializeField] private AudioClip pipeAudioClip;
+    [SerializeField] private AudioSource pipeAudioSource = null;
+    [SerializeField] private AudioClip pipeAudioClip = null;
 
     private Rigidbody rb;
     private Interact_PGW thePickUp;

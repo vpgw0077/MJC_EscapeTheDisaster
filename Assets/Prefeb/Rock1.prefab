@@ -236,6 +236,7 @@ MonoBehaviour:
   audioPlayer: {fileID: 82879435402540654}
   sfx:
   - {fileID: 8300000, guid: f905449432698c64eb3f84bdb6221b14, type: 3}
+  targetSpeed: 10
 --- !u!114 &4103972786090545150
 MonoBehaviour:
   m_ObjectHideFlags: 0

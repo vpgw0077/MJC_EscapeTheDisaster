@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Torch_PGW : MonoBehaviour
 {
-    [SerializeField] private GameObject FireEffect;
+    [SerializeField] private GameObject FireEffect = null;
 
     private bool isOnFire = false;
 

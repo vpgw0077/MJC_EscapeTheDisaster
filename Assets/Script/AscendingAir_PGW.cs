@@ -3,52 +3,69 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AscendingAir_PGW : AirController_PGW
+public class AscendingAir_PGW : MonoBehaviour
 {
-    private bool blocked;
-    private AscendingAirControll_PGW theAir;
+    [SerializeField] private bool blocked;
+
+    public AirComponent_PGW theAirComponent;
+
 
     private void Awake()
     {
-        theAir = transform.GetComponentInParent<AscendingAirControll_PGW>();
+        theAirComponent.rayLength = 2f;
+        theAirComponent.layerMask = 1 << 11;
     }
-
-    protected override void FixedUpdate()
+    private void OnDrawGizmos()
     {
-        if(somethingDetect && !blocked)
-        {
-            rb.AddForce(transform.up * airForce, ForceMode.Force);
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(theAirComponent.rayStartPosition.position, transform.up * theAirComponent.hit.distance);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(theAirComponent.rayStartPosition.position + transform.up * theAirComponent.hit.distance, 0.5f);
     }
-    protected override void OnTriggerEnter(Collider other)
+    private void Update()
     {
-
-        if (other.CompareTag("Rock"))
+        if (Physics.SphereCast(theAirComponent.rayStartPosition.position, 0.5f, transform.up ,out theAirComponent.hit, theAirComponent.rayLength, theAirComponent.layerMask, QueryTriggerInteraction.Ignore))
         {
-            blocked = true;
-            theAir.IncreseHeight();
-        }
 
+            if (theAirComponent.hit.transform.CompareTag("Rock"))
+            {
+                blocked = true;
+            }
+        }
         else
-        {
-            somethingDetect = true;
-            rb = other.GetComponent<Rigidbody>();
-        }
-
-    }
-
-    protected override void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Rock"))
         {
             blocked = false;
-            theAir.DecreseHeight();
-
-        }
-        else
-        {
-            somethingDetect = false;
         }
     }
 
+
+    private void FixedUpdate()
+    {
+        if (theAirComponent.objectRigidbody.Count != 0 && !blocked)
+        {
+            foreach (Rigidbody rb in theAirComponent.objectRigidbody)
+            {
+                rb.AddForce(transform.up * theAirComponent.airForce + transform.forward * 2.5f, ForceMode.Force);
+            }
+        }
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Rock") && other.GetComponent<Rigidbody>() != null && !blocked)
+        {
+            theAirComponent.objectRigidbody.Add(other.GetComponent<Rigidbody>());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag("Rock") && other.GetComponent<Rigidbody>() != null)
+        {
+            theAirComponent.objectRigidbody.Remove(other.GetComponent<Rigidbody>());
+        }
+
+
+    }
 }

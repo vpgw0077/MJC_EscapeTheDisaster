@@ -9,8 +9,8 @@ public class Portal_PGW : MonoBehaviour
         leukocyteMode,
         virusMode
     }
-    [SerializeField] private PortalMode portalMode;
-    [SerializeField] private Portal_PGW otherPortal;
+    [SerializeField] private PortalMode portalMode = PortalMode.leukocyteMode;
+    [SerializeField] private Portal_PGW otherPortal = null;
 
     private Interact_PGW theInteract;
 

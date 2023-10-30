@@ -9,13 +9,9 @@ public class PushPipe_PGW : MonoBehaviour
     [SerializeField] private List<Rigidbody> lightRockrb;
 
     [Space]
-    [SerializeField] private float rockThrowForce;
-    [SerializeField] private Transform rayStartPosition;
-    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private float knockBackDuration = 0f;
+    [SerializeField] private float rockThrowForce = 0f;
 
-
-    private float rayLength;
-    private RaycastHit hit;
     private Vector3 originTriggerPos;
 
 
@@ -23,15 +19,16 @@ public class PushPipe_PGW : MonoBehaviour
     {
         lightRockrb = new List<Rigidbody>(5);
         originTriggerPos = transform.localPosition;
-        rayLength = GetComponent<BoxCollider>().size.x;
+        theAirComponent.rayLength = GetComponent<BoxCollider>().size.x;
+        theAirComponent.layerMask = 1 << 11;
     }
     private void Update()
     {
-        if (Physics.Raycast(rayStartPosition.position, transform.right, out hit, rayLength, layerMask))
+        if (Physics.Raycast(theAirComponent.rayStartPosition.position, transform.right, out theAirComponent.hit, theAirComponent.rayLength, theAirComponent.layerMask, QueryTriggerInteraction.Ignore))
         {
-            if (hit.transform.CompareTag("Rock"))
+            if (theAirComponent.hit.transform.CompareTag("Rock"))
             {
-                transform.localPosition = new Vector3(originTriggerPos.x - (rayLength - Vector3.Distance(rayStartPosition.position, hit.point)),
+                transform.localPosition = new Vector3(originTriggerPos.x - (theAirComponent.rayLength - Vector3.Distance(theAirComponent.rayStartPosition.position, theAirComponent.hit.point)),
                                                                             transform.localPosition.y, transform.localPosition.z);
             }
         }
@@ -61,16 +58,22 @@ public class PushPipe_PGW : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Debug.DrawRay(rayStartPosition.position, transform.right * rayLength, Color.red);
+        Debug.DrawRay(theAirComponent.rayStartPosition.position, transform.right * theAirComponent.rayLength, Color.red);
     }
     private void OnTriggerEnter(Collider other)
     {
 
         if (!other.transform.CompareTag("Rock") && !other.transform.CompareTag("LightRock") && other.GetComponent<Rigidbody>() != null)
         {
+            if (other.CompareTag("Player"))
+            {
+                IState_PGW<CharacterMove_PGW.playerState> state = other.GetComponent<IState_PGW<CharacterMove_PGW.playerState>>();
+                StartCoroutine(state.ChangeState(CharacterMove_PGW.playerState.OutOfControl, 0));
+
+            }
             theAirComponent.objectRigidbody.Add(other.GetComponent<Rigidbody>());
         }
-        else if(other.transform.CompareTag("LightRock") && other.GetComponent<Rigidbody>() != null)
+        else if (other.transform.CompareTag("LightRock") && other.GetComponent<Rigidbody>() != null)
         {
             lightRockrb.Add(other.GetComponent<Rigidbody>());
         }
@@ -80,6 +83,12 @@ public class PushPipe_PGW : MonoBehaviour
     {
         if (!other.transform.CompareTag("Rock") && !other.transform.CompareTag("LightRock") && other.GetComponent<Rigidbody>() != null)
         {
+            if (other.CompareTag("Player"))
+            {
+                IState_PGW<CharacterMove_PGW.playerState> state = other.GetComponent<IState_PGW<CharacterMove_PGW.playerState>>();
+                StartCoroutine(state.ChangeState(CharacterMove_PGW.playerState.Controlable, knockBackDuration));
+
+            }
             theAirComponent.objectRigidbody.Remove(other.GetComponent<Rigidbody>());
 
         }

@@ -9,8 +9,8 @@ public class VirusController_PGW : MonoBehaviour
         CommonVirus,
         SuperVirus
     }
-    [SerializeField] private GameObject DNA;
-    [SerializeField] private VirusType virusType;
+    [SerializeField] private GameObject DNA = null;
+    [SerializeField] private VirusType virusType = VirusType.CommonVirus;
 
     private void OnCollisionEnter(Collision collision)
     {
