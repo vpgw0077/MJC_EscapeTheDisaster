@@ -5,8 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Pipe
-  - PickPosition
-  - Face
   - Cam
   - White
   - PipeSwitch
@@ -14,20 +12,17 @@ TagManager:
   - VirusDNA
   - Rock
   - Barrel
-  - something
   - DoorSwitch
   - EleSwitch
   - RespawnZone
-  - AnswerBox
   - FireZone
-  - TorchHead
   - Car
   - Renton
   - Wheel
-  - Vaccine
   - LightRock
   - PipeZone
   - FxTemporaire
+  - SprinklerSensor
   layers:
   - Default
   - TransparentFX

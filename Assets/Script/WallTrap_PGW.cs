@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class WallTrap_PGW : MonoBehaviour
 {
+    [Header("AudioComponent")]
+    [SerializeField] private AudioSource theAudioSource = null;
+    [SerializeField] private AudioClip theAudioClip = null;
+
+    [Space]
     [SerializeField] private Transform origin = null;
     [SerializeField] private Transform after = null;
 
@@ -13,8 +18,8 @@ public class WallTrap_PGW : MonoBehaviour
     [SerializeField] private float deactivateSpeed = 10f;
     [SerializeField] private float knockBackDuration = 0f;
 
-    [SerializeField] private Rigidbody playerRigidbody = null;
-    [SerializeField] private Rigidbody propRigidbody = null;
+    private Rigidbody playerRigidbody = null;
+    private Rigidbody propRigidbody = null;
 
     private Vector3 randomTorque = Vector3.zero;
     private bool detectPlayer = false;
@@ -42,6 +47,7 @@ public class WallTrap_PGW : MonoBehaviour
 
         isActivate = true;
         isReady = false;
+        theAudioSource.PlayOneShot(theAudioClip);
         while (gameObject.transform.position != after.position)
         {
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, after.position, activateSpeed * Time.deltaTime);

@@ -4,31 +4,28 @@ using UnityEngine;
 
 public class CamController_PGW : MonoBehaviour
 {
-    [SerializeField] private Transform targetTransform = null;
+    [SerializeField] private Rigidbody targetTransform = null;
     [SerializeField] private Transform cameraTransform = null;
     [SerializeField] private Transform cameraPivotTransform = null;
 
     [SerializeField] private SkinnedMeshRenderer targetRender = null;
 
-    [SerializeField] private bool changeTransparency = true;
 
     [SerializeField] private float mouseSensitivity = 0;
-    [SerializeField] private float lookSpeed = 0.1f;
     [SerializeField] private float followSpeed = 0.1f;
-    [SerializeField] private float pivotSpeed = 0.03f;
     [SerializeField] private float minimumPivot = -35;
     [SerializeField] private float maximumPivot = 35;
     [SerializeField] private float cameraSphereRadius = 0.2f;
     [SerializeField] private float cameraCollisionOffset = 0.2f;
     [SerializeField] private float minimumCollisionOffset = 0.2f;
 
-    private Transform myTransform;
+    private Transform myTransform = null;
     private Vector3 cameraTransformPosition;
-    private Vector3 cameraFollowVelocity = Vector3.zero;
-    private float targetPosition;
-    private float defaultPosition;
-    private float lookAngle;
-    private float pivotAngle;
+    private float targetPosition = 0f;
+    private float defaultPosition = 0f;
+    [SerializeField]private float targetLookAngle = 0f;
+    [SerializeField]private float camLookAngle = 0f;
+    private float pivotAngle = 0f;
 
     private void Awake()
     {
@@ -36,46 +33,45 @@ public class CamController_PGW : MonoBehaviour
         defaultPosition = cameraTransform.localPosition.z;
     }
 
-   private void Start()
+    private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-    private void FollowTarget(float delta)
-    {
-        Vector3 targetPosition = Vector3.Lerp(myTransform.position, targetTransform.position, delta / followSpeed);
-        myTransform.position = targetPosition;
-
-        HandleCameraCollision(delta);
-    }
-
-    private void HandleCameraRotation(float delta, float mouseXInput, float mouseYInput)
-    {
-        lookAngle += Input.GetAxis("Mouse X") * mouseXInput;
-        pivotAngle -= Input.GetAxis("Mouse Y") * mouseYInput;
-        pivotAngle = Mathf.Clamp(pivotAngle, minimumPivot, maximumPivot);
-
-        /*Vector3 rotation = Vector3.zero;
-        rotation.x = lookAngle;
-        Quaternion targetRotation = Quaternion.Euler(rotation);
-        myTransform.rotation = targetRotation;
-
-        rotation = Vector3.zero;
-        rotation.x = pivotAngle;
-
-        targetRotation = Quaternion.Euler(rotation);*/
-        targetTransform.rotation = Quaternion.Euler(0, lookAngle, 0);
-        cameraPivotTransform.localRotation = Quaternion.Euler(pivotAngle, lookAngle, 0);
-    }
-    // Start is called before the first frame update
-
     private void FixedUpdate()
     {
-        float delta = Time.fixedDeltaTime;
-
-        FollowTarget(delta);
-        HandleCameraRotation(delta, mouseSensitivity, mouseSensitivity);
+        HandleTargetRotation();
     }
+
+    private void LateUpdate()
+    {
+        float delta = Time.deltaTime;
+        HandleCameraRotation();
+        FollowTarget();
+        HandleCameraCollision(delta);
+
+    }
+
+    private void HandleTargetRotation()
+    {
+        targetLookAngle += Input.GetAxis("Mouse X") * mouseSensitivity;
+        targetTransform.rotation = Quaternion.Euler(0, camLookAngle, 0);
+    }
+    private void FollowTarget()
+    {      
+
+        myTransform.position = Vector3.Lerp(myTransform.position, targetTransform.position, Time.deltaTime *  followSpeed);
+    }
+
+    private void HandleCameraRotation()
+    {
+        camLookAngle += Input.GetAxis("Mouse X") * mouseSensitivity;
+        pivotAngle -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+        pivotAngle = Mathf.Clamp(pivotAngle, minimumPivot, maximumPivot);
+
+        cameraPivotTransform.localRotation = Quaternion.Euler(pivotAngle, camLookAngle, 0);
+    }
+
 
     private void HandleCameraCollision(float delta)
     {

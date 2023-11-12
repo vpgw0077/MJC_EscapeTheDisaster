@@ -7,6 +7,10 @@ public class RotateObject_PGW : MonoBehaviour, ITrigger_PGW
 {
     [SerializeField] private AudioSource theAudioSource = null;
     [SerializeField] private AudioClip theAudioClip = null;
+    [Header("ObjectAudioComponent")]
+    [SerializeField] private AudioSource targetAudioSource = null;
+    [SerializeField] private AudioClip targetAudioClip = null;
+    [Space]
 
     [SerializeField] private ButtonPowerPipe_PGW buttonPower = null;
     [SerializeField] private Rigidbody targetObject = null;
@@ -18,6 +22,13 @@ public class RotateObject_PGW : MonoBehaviour, ITrigger_PGW
     private void Awake()
     {
         rot = new Vector3(0, rotSpeed, 0);
+    }
+    private void Update()
+    {
+        if (!isActivate)
+        {
+            targetAudioSource.Stop();
+        }
     }
     private void FixedUpdate()
     {
@@ -33,6 +44,7 @@ public class RotateObject_PGW : MonoBehaviour, ITrigger_PGW
         theAudioSource.PlayOneShot(theAudioClip);
         if (buttonPower.IsPowerOn)
         {
+            targetAudioSource.PlayOneShot(targetAudioClip);
             isActivate = !isActivate;
         }
     }

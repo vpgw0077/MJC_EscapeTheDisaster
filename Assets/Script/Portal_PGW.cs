@@ -25,12 +25,12 @@ public class Portal_PGW : MonoBehaviour
         theInteract = FindObjectOfType<Interact_PGW>();
         portalBorder = GetComponentInChildren<ParticleSystem>();
         portalParticleModule = portalBorder.main;
-        portalParticleModule.startColor = leukocytePortalColor;
+        portalParticleModule.startColor = portalMode == PortalMode.leukocyteMode ? leukocytePortalColor : virusPortalColor;
 
     }
     public void ChangePortal()
     {
-        if(portalMode == PortalMode.leukocyteMode)
+        if (portalMode == PortalMode.leukocyteMode)
         {
             portalParticleModule.startColor = virusPortalColor;
             portalMode = PortalMode.virusMode;
@@ -46,11 +46,11 @@ public class Portal_PGW : MonoBehaviour
         if (collision.gameObject.CompareTag("White") && portalMode == PortalMode.leukocyteMode)
         {
 
-            if (ReferenceEquals(theInteract.CarriedObject,collision.gameObject))
+            if (ReferenceEquals(theInteract.CarriedObject, collision.gameObject))
             {
                 theInteract.TryDrop();
             }
-            collision.transform.position = otherPortal.transform.position + otherPortal.transform.forward;
+            collision.transform.position = otherPortal.transform.position + otherPortal.transform.forward * 3F;
             ChangePortal();
             otherPortal.ChangePortal();
 
@@ -63,7 +63,7 @@ public class Portal_PGW : MonoBehaviour
             {
                 theInteract.TryDrop();
             }
-            collision.transform.position = otherPortal.transform.position + otherPortal.transform.forward;
+            collision.transform.position = otherPortal.transform.position + otherPortal.transform.forward * 3F;
             ChangePortal();
             otherPortal.ChangePortal();
         }
