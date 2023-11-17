@@ -8,7 +8,7 @@ public class PropSound : MonoBehaviour
     [SerializeField] private AudioClip[] sfx = null;
 
     [Space]
-    [SerializeField] private float targetSpeed;
+    [SerializeField] private float targetSpeed = 0f;
 
 
     private void Awake()

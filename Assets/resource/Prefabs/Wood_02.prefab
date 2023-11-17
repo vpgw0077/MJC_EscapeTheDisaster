@@ -133,6 +133,7 @@ MonoBehaviour:
   - {fileID: 198137210661686297}
   - {fileID: 198311760036480831}
   fireLight: {fileID: 603763831}
+  isIgnite: 0
   parentObject: {fileID: 8178109065456489191}
   objectMesh: {fileID: 2953229033566080306}
   igniteMaterial: {fileID: 2100000, guid: 57366814273e86040a45e37d87b824a5, type: 2}

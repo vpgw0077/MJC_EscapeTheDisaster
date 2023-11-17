@@ -6,7 +6,7 @@ public class Sprinkler_PGW : MonoBehaviour
 {
     [SerializeField] private AudioSource[] theAudioSources = null;
     [SerializeField] private AudioClip theAudioClip = null;
-    [SerializeField] private ParticleSystem[] waterParticles;
+    [SerializeField] private ParticleSystem[] waterParticles = null;
     [Space]
     [SerializeField] private float radius = 50f;
     private bool isActivate = false;
@@ -25,6 +25,11 @@ public class Sprinkler_PGW : MonoBehaviour
         }
 
         yield return new WaitForSeconds(12f);
+        for (int i = 0; i < waterParticles.Length; i++)
+        {
+            theAudioSources[i].Stop();
+
+        }
         Collider[] coll = Physics.OverlapSphere(transform.position, radius);
         foreach (var col in coll)
         {

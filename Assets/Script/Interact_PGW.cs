@@ -60,6 +60,10 @@ public class Interact_PGW : MonoBehaviour
         playerCollider = GetComponent<Collider>();
     }
 
+    private void OnDrawGizmos()
+    {
+        Debug.DrawRay(rayStartPos.position, rayStartPos.forward * interactDistance, Color.red);
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -70,7 +74,7 @@ public class Interact_PGW : MonoBehaviour
 
             }
 
-            else if (Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, layermask,QueryTriggerInteraction.Ignore))
+            else if (Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, -1,QueryTriggerInteraction.Ignore))
             {
                 TryInteract();
 
