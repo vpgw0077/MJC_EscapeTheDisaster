@@ -23,6 +23,8 @@ TagManager:
   - PipeZone
   - FxTemporaire
   - SprinklerSensor
+  - Vaccine
+  - TorchHead
   layers:
   - Default
   - TransparentFX
@@ -37,9 +39,9 @@ TagManager:
   - Player
   - Rock
   - Item
-  - PickPosition
+  - WallCheck
   - Switch
-  - 
+  - Interactable
   - Trigger
   - 
   - 

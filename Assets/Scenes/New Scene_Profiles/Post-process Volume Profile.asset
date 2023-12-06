@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Post-process Volume Profile
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 114609619485854008}
-  - {fileID: 114181595784832786}
---- !u!114 &114181595784832786
+  - {fileID: 114770661028682910}
+  - {fileID: 114571926556352262}
+--- !u!114 &114571926556352262
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,14 +67,14 @@ MonoBehaviour:
     overrideState: 0
     value: 1
   temperature:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 10
   tint:
     overrideState: 0
     value: 0
   colorFilter:
     overrideState: 0
-    value: {r: 1, g: 1, b: 1, a: 1}
+    value: {r: 2, g: 2, b: 2, a: 1}
   hueShift:
     overrideState: 0
     value: 0
@@ -85,11 +85,11 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   postExposure:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 1
   contrast:
     overrideState: 0
-    value: 0
+    value: 98
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
@@ -110,7 +110,7 @@ MonoBehaviour:
     value: 0
   mixerBlueOutRedIn:
     overrideState: 0
-    value: 0
+    value: -29
   mixerBlueOutGreenIn:
     overrideState: 0
     value: 0
@@ -119,13 +119,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 1, y: 1, z: 1, w: 0.54161173}
   gamma:
     overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 1, y: 1, z: 1, w: -0.18494055}
   gain:
     overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 1, y: 1, z: 1, w: 0.44914126}
   masterCurve:
     overrideState: 0
     value:
@@ -1326,7 +1326,7 @@ MonoBehaviour:
       - 0.5
       - 0.5
       - 0.5
---- !u!114 &114609619485854008
+--- !u!114 &114770661028682910
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1347,7 +1347,7 @@ MonoBehaviour:
     value: 1
   threshold:
     overrideState: 0
-    value: 1.79
+    value: 1
   softKnee:
     overrideState: 1
     value: 1
@@ -1359,9 +1359,9 @@ MonoBehaviour:
     value: 10
   anamorphicRatio:
     overrideState: 0
-    value: 0.02
+    value: 0
   color:
-    overrideState: 0
+    overrideState: 1
     value: {r: 1, g: 1, b: 1, a: 1}
   fastMode:
     overrideState: 0

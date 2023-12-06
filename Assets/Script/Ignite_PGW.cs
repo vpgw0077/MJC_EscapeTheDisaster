@@ -13,12 +13,16 @@ public class Ignite_PGW : MonoBehaviour
 
     [SerializeField] protected bool isIgnite = false;
 
+    private void Awake()
+    {
+        theAudioSource.clip = theAudioClip;
+    }
     public virtual void Ignite()
     {
         if (isIgnite) return;
 
         isIgnite = true;
-        theAudioSource.PlayOneShot(theAudioClip);
+        theAudioSource.Play();
         for (int i = 0; i < fireParticle.Length; i++)
         {
             var particle = fireParticle[i].main;

@@ -43,7 +43,7 @@ public class BgmPlayer_PGW : MonoBehaviour
     private void PlayBgm()
     {
 
-        if (bgmIndex > Bgms.Length) bgmIndex = 0;
+        if (bgmIndex > Bgms.Length-1) bgmIndex = 0;
         theAudioSource.PlayOneShot(Bgms[bgmIndex]);
         bgmIndex++;
 

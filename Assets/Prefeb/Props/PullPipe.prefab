@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1967074337}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5813022141774531085}
@@ -6999,12 +6999,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theAirComponent:
-    layerMask: 0
     airForce: 50
     rayLength: 0
     rayStartPosition: {fileID: 1967074338}
     objectRigidbody: []
   rockAirForce: 200
+  blocked: 0
 --- !u!1001 &1639004565097325613
 PrefabInstance:
   m_ObjectHideFlags: 0

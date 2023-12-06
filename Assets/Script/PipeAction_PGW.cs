@@ -11,12 +11,12 @@ public class PipeAction_PGW : MonoBehaviour
     private Rigidbody rb;
     private Interact_PGW thePickUp;
 
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         thePickUp = FindObjectOfType<Interact_PGW>();
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PipeZone"))
@@ -28,7 +28,6 @@ public class PipeAction_PGW : MonoBehaviour
             gameObject.transform.position = other.transform.position;
             gameObject.transform.rotation = other.transform.rotation;
             rb.constraints = RigidbodyConstraints.FreezeAll;
-
             pipeAudioSource.PlayOneShot(pipeAudioClip);
             ITrigger_PGW pipeTrigger = other.GetComponent<ITrigger_PGW>();
             if (pipeTrigger != null)
@@ -46,7 +45,6 @@ public class PipeAction_PGW : MonoBehaviour
         if (other.CompareTag("PipeZone"))
         {
             rb.constraints = RigidbodyConstraints.None;
-
             pipeAudioSource.PlayOneShot(pipeAudioClip);
             ITrigger_PGW pipeTrigger = other.GetComponent<ITrigger_PGW>();
             if (pipeTrigger != null)

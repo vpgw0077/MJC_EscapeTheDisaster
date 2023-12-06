@@ -23,13 +23,8 @@ public class Sprinkler_PGW : MonoBehaviour
             theAudioSources[i].PlayOneShot(theAudioClip);
 
         }
+        yield return new WaitForSeconds(5f);
 
-        yield return new WaitForSeconds(12f);
-        for (int i = 0; i < waterParticles.Length; i++)
-        {
-            theAudioSources[i].Stop();
-
-        }
         Collider[] coll = Physics.OverlapSphere(transform.position, radius);
         foreach (var col in coll)
         {
@@ -41,7 +36,12 @@ public class Sprinkler_PGW : MonoBehaviour
 
 
         }
+        yield return new WaitForSeconds(5f);
+        for (int i = 0; i < waterParticles.Length; i++)
+        {
+            theAudioSources[i].Stop();
+
+        }
         isActivate = false;
-        yield return null;
     }
 }

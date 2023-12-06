@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &75389481
 Transform:
@@ -92,12 +92,13 @@ GameObject:
   - component: {fileID: 530386708}
   - component: {fileID: 7574128465924788829}
   - component: {fileID: 450160894}
+  - component: {fileID: 5306801358859970224}
   m_Layer: 14
   m_Name: Switch
   m_TagString: EleSwitch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4896065085175918323
 Transform:
@@ -111,6 +112,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 75389481}
+  - {fileID: 2125602260742311098}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4194,8 +4196,8 @@ MonoBehaviour:
   targetObject: {fileID: 0}
   targetPosition: {fileID: 0}
   originPosition: {fileID: 0}
-  theAudioSource: {fileID: 0}
-  theAudioClip: {fileID: 0}
+  theAudioSource: {fileID: 450160894}
+  theAudioClip: {fileID: 8300000, guid: 739c79decf21aae4ca5fe2f2bae97ad8, type: 3}
   elevatorAudioSource: {fileID: 0}
   elevatorAudioClip: {fileID: 8300000, guid: 43c49a33ca009ee4f86cf8ce389b7da8, type: 3}
   liftAudioClip: {fileID: 8300000, guid: c4210254adf55b2418a48110d80bfaaa, type: 3}
@@ -4310,3 +4312,60 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5306801358859970224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3556807496092144534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e1a03b67389ef4c99a24921c613fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: "\uC5D8\uB9AC\uBCA0\uC774\uD130 \uC2A4\uC704\uCE58"
+--- !u!1 &5476295184092678764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2125602260742311098}
+  - component: {fileID: 3725142583989281985}
+  m_Layer: 15
+  m_Name: InteractZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2125602260742311098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5476295184092678764}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.402, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4896065085175918323}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3725142583989281985
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5476295184092678764}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2.5, z: 2}
+  m_Center: {x: -0.32, y: 0, z: 0}

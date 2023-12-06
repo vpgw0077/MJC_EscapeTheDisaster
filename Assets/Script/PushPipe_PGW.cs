@@ -20,11 +20,10 @@ public class PushPipe_PGW : MonoBehaviour
         lightRockrb = new List<Rigidbody>(5);
         originTriggerPos = transform.localPosition;
         theAirComponent.rayLength = GetComponent<BoxCollider>().size.x;
-        theAirComponent.layerMask = 1 << 11;
     }
     private void Update()
     {
-        if (Physics.Raycast(theAirComponent.rayStartPosition.position, transform.right, out theAirComponent.hit, theAirComponent.rayLength, theAirComponent.layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(theAirComponent.rayStartPosition.position, transform.right, out theAirComponent.hit, theAirComponent.rayLength, -1, QueryTriggerInteraction.Ignore))
         {
             if (theAirComponent.hit.transform.CompareTag("Rock"))
             {
@@ -55,10 +54,6 @@ public class PushPipe_PGW : MonoBehaviour
             }
         }
 
-    }
-    private void OnDrawGizmos()
-    {
-        Debug.DrawRay(theAirComponent.rayStartPosition.position, transform.right * theAirComponent.rayLength, Color.red);
     }
     private void OnTriggerEnter(Collider other)
     {

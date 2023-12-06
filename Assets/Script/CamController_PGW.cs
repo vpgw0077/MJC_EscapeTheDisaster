@@ -10,8 +10,7 @@ public class CamController_PGW : MonoBehaviour
 
     [SerializeField] private SkinnedMeshRenderer targetRender = null;
 
-
-    [SerializeField] private float mouseSensitivity = 0;
+    [SerializeField] private float mouseSensitivity = 2f;
     [SerializeField] private float followSpeed = 0.1f;
     [SerializeField] private float minimumPivot = -35;
     [SerializeField] private float maximumPivot = 35;
@@ -23,8 +22,8 @@ public class CamController_PGW : MonoBehaviour
     private Vector3 cameraTransformPosition;
     private float targetPosition = 0f;
     private float defaultPosition = 0f;
-    [SerializeField]private float targetLookAngle = 0f;
-    [SerializeField]private float camLookAngle = 0f;
+    private float targetLookAngle = 0f;
+    private float camLookAngle = 0f;
     private float pivotAngle = 0f;
 
     private void Awake()
@@ -40,15 +39,23 @@ public class CamController_PGW : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        HandleTargetRotation();
+        if (!MenuManager_PGW.isStop)
+        {
+            HandleTargetRotation();
+
+        }
     }
 
     private void LateUpdate()
     {
-        float delta = Time.deltaTime;
-        HandleCameraRotation();
-        FollowTarget();
-        HandleCameraCollision(delta);
+        if (!MenuManager_PGW.isStop)
+        {
+            float delta = Time.deltaTime;
+            HandleCameraRotation();
+            FollowTarget();
+            HandleCameraCollision(delta);
+
+        }
 
     }
 
@@ -58,9 +65,9 @@ public class CamController_PGW : MonoBehaviour
         targetTransform.rotation = Quaternion.Euler(0, camLookAngle, 0);
     }
     private void FollowTarget()
-    {      
+    {
 
-        myTransform.position = Vector3.Lerp(myTransform.position, targetTransform.position, Time.deltaTime *  followSpeed);
+        myTransform.position = Vector3.Lerp(myTransform.position, targetTransform.position, Time.deltaTime * followSpeed);
     }
 
     private void HandleCameraRotation()
@@ -119,6 +126,10 @@ public class CamController_PGW : MonoBehaviour
 
     }
 
+    public void ChangeMouseSensitivity(float value)
+    {
+        mouseSensitivity = value;
+    }
 
 }
 

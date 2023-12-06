@@ -19,6 +19,7 @@ public class EleSwitch_PGW : MovingObject_PGW, ITrigger_PGW
     private void Awake()
     {
         currentPosition = originPosition;
+        elevatorAudioSource.clip = elevatorAudioClip;
     }
 
 
@@ -45,7 +46,7 @@ public class EleSwitch_PGW : MovingObject_PGW, ITrigger_PGW
         if (buttonPower.IsPowerOn)
         {
             StartCoroutine(TurnOn(CheckTargetPosition()));
-            elevatorAudioSource.PlayOneShot(elevatorAudioClip);
+            elevatorAudioSource.Play();
 
         }
 

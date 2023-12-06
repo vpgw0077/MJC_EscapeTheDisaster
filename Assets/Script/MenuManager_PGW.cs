@@ -1,22 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class MenuManager_PGW : MonoBehaviour
 {
+    public static Action Respawn;
+    public static bool isStop = false;
     [SerializeField] private GameObject optionUI = null;
     [SerializeField] private GameObject player = null;
 
-    private bool isStop = false;
-    private Respawnable_PGW[] theItem;
-    private PlayerRespawnZone_PGW theRespawn;
 
     // Start is called before the first frame update
     void Awake()
     {
-        theRespawn = FindObjectOfType<PlayerRespawnZone_PGW>();
+        optionUI.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
-
     }
 
     // Update is called once per frame
@@ -28,7 +28,6 @@ public class MenuManager_PGW : MonoBehaviour
             {
 
                 Resume();
-                CloseOption();
 
             }
             else
@@ -44,28 +43,20 @@ public class MenuManager_PGW : MonoBehaviour
         Cursor.visible = false;
         optionUI.SetActive(false);
         isStop = false;
+        Time.timeScale = 1;
 
 
     }
     public void GameQuit()
     {
-        SceneManager.LoadScene("Intro");
+        Application.Quit();
     }
 
     public void LoadCheckPoint()
     {
-        player.transform.position = theRespawn.respawnZoneList[0].position;
-        theItem = FindObjectsOfType<Respawnable_PGW>();
-        foreach (Respawnable_PGW item in theItem)
-        {
-            item.RespawnObject();
-        }
+        Respawn();
+        Resume();
     }
-    private void CloseOption()
-    {
-        optionUI.SetActive(false);
-    }
-
     private void Pause()
     {
 
@@ -73,6 +64,7 @@ public class MenuManager_PGW : MonoBehaviour
         Cursor.visible = true;
         optionUI.SetActive(true);
         isStop = true;
+        Time.timeScale = 0;
 
 
     }

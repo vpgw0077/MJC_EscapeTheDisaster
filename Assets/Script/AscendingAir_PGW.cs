@@ -13,19 +13,10 @@ public class AscendingAir_PGW : MonoBehaviour
     private void Awake()
     {
         theAirComponent.rayLength = 2f;
-        theAirComponent.layerMask = 1 << 11;
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(theAirComponent.rayStartPosition.position, transform.up * theAirComponent.hit.distance);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(theAirComponent.rayStartPosition.position + transform.up * theAirComponent.hit.distance, 0.5f);
     }
     private void Update()
     {
-        if (Physics.SphereCast(theAirComponent.rayStartPosition.position, 0.5f, transform.up ,out theAirComponent.hit, theAirComponent.rayLength, theAirComponent.layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.SphereCast(theAirComponent.rayStartPosition.position, 0.5f, transform.up ,out theAirComponent.hit, theAirComponent.rayLength, -1, QueryTriggerInteraction.Ignore))
         {
 
             if (theAirComponent.hit.transform.CompareTag("Rock"))

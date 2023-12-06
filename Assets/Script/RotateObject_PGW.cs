@@ -22,6 +22,7 @@ public class RotateObject_PGW : MonoBehaviour, ITrigger_PGW
     private void Awake()
     {
         rot = new Vector3(0, rotSpeed, 0);
+        targetAudioSource.clip = targetAudioClip;
     }
     private void Update()
     {
@@ -44,7 +45,7 @@ public class RotateObject_PGW : MonoBehaviour, ITrigger_PGW
         theAudioSource.PlayOneShot(theAudioClip);
         if (buttonPower.IsPowerOn)
         {
-            targetAudioSource.PlayOneShot(targetAudioClip);
+            targetAudioSource.Play();
             isActivate = !isActivate;
         }
     }

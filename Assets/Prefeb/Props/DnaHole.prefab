@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &7281114172366082448
 Transform:
@@ -7784,7 +7784,7 @@ MonoBehaviour:
   m_Colors: []
   m_UnwrapParameters:
     m_HardAngle: 88
-    m_PackMargin: 20
+    m_PackMargin: 40
     m_AngleError: 8
     m_AreaError: 15
   m_PreserveMeshAssetOnDestroy: 0
@@ -7823,7 +7823,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &7281114172804575396
 Transform:
@@ -7864,3 +7864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5712cc4a812c48940a483a0e9648878c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorLamp: {fileID: 0}
+  redLamp: {fileID: 2100000, guid: 73dc4f1f70d875f438f3e291a85e2f05, type: 2}
+  greenLamp: {fileID: 2100000, guid: 54ade4e11f05b184693f119ffd5c35bf, type: 2}

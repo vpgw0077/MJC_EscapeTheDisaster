@@ -1,19 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Interact_PGW : MonoBehaviour
 {
+    [Header("Transform")]
     [SerializeField] private Transform rayStartPos = null;
     [SerializeField] private Transform pickPosition = null;
     [SerializeField] private Transform wallRayPos = null;
-
+    [Space]
+    [Header("Values")]
     [SerializeField] private float interactDistance = 0;
     [SerializeField] private float throwForce = 0;
     [SerializeField] private float objectMoveSpeed = 0;
     [SerializeField] private float maxCarryDistance = 0;
 
     [SerializeField] private LayerMask layermask;
+    [Space]
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI InteractText = null;
 
     private Collider carryObjectCollider;
     private Collider playerCollider;
@@ -60,10 +66,6 @@ public class Interact_PGW : MonoBehaviour
         playerCollider = GetComponent<Collider>();
     }
 
-    private void OnDrawGizmos()
-    {
-        Debug.DrawRay(rayStartPos.position, rayStartPos.forward * interactDistance, Color.red);
-    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -74,9 +76,14 @@ public class Interact_PGW : MonoBehaviour
 
             }
 
-            else if (Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, -1,QueryTriggerInteraction.Ignore))
+
+            else if (!Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, layermask, QueryTriggerInteraction.Ignore))
             {
-                TryInteract();
+                if (Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, -1))
+                {
+                    TryInteract();
+
+                }
 
             }
         }
@@ -85,21 +92,52 @@ public class Interact_PGW : MonoBehaviour
         {
             if (Carrying)
             {
-                carryObjectRigidBody.AddForce(rayStartPos.forward* throwForce);
+                carryObjectRigidBody.AddForce(rayStartPos.forward * throwForce);
                 TryDrop();
 
             }
         }
         CheckInWall();
-
+        ShowInteractUI();
     }
-
     private void FixedUpdate()
     {
         if (Carrying)
         {
             AdjustObjectPosition();
         }
+    }
+    private void ShowInteractUI()
+    {
+
+        if (!Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, layermask, QueryTriggerInteraction.Ignore))
+        {
+            if (Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, -1) && !Carrying)
+            {
+                InteractText.gameObject.SetActive(true);
+                ObjectInfo_PGW objectInfo = hit.transform.GetComponentInParent<ObjectInfo_PGW>();
+                if (objectInfo != null)
+                {
+                    InteractText.text = objectInfo.ObjectName + "<color=yellow>" + "(E)" + "</color>";
+                }
+
+            }
+            else
+            {
+                InteractText.text = "";
+                InteractText.gameObject.SetActive(false);
+
+            }
+
+        }
+        else
+        {
+            InteractText.text = "";
+            InteractText.gameObject.SetActive(false);
+
+        }
+
+
     }
     private void CheckInWall()
     {
@@ -124,13 +162,13 @@ public class Interact_PGW : MonoBehaviour
 
     private void TryInteract()
     {
-        PickUpAbleObject_PGW pickUpObject = hit.collider.GetComponent<PickUpAbleObject_PGW>();
-        ITrigger_PGW trigger = hit.collider.GetComponent<ITrigger_PGW>();
+        PickUpAbleObject_PGW pickUpObject = hit.collider.GetComponentInParent<PickUpAbleObject_PGW>();
+        ITrigger_PGW trigger = hit.collider.GetComponentInParent<ITrigger_PGW>();
         if (pickUpObject != null)
         {
 
-            carryObjectRigidBody = pickUpObject.GetComponent<Rigidbody>();
-            carryObjectCollider = pickUpObject.GetComponent<Collider>();
+            carryObjectRigidBody = pickUpObject.GetComponentInParent<Rigidbody>();
+            carryObjectCollider = pickUpObject.GetComponentInParent<Collider>();
             Physics.IgnoreCollision(playerCollider, carryObjectCollider, true);
 
             Carrying = true;
@@ -155,11 +193,11 @@ public class Interact_PGW : MonoBehaviour
     public void TryDrop()
     {
         Physics.IgnoreCollision(playerCollider, carryObjectCollider, false);
+        Carrying = false;
         carryObjectRigidBody.useGravity = true;
         carryObjectRigidBody.drag = 0f;
         carryObjectRigidBody.angularDrag = 0.05f;
         carryObjectRigidBody.velocity = Vector3.zero;
-        Carrying = false;
         CarriedObject = null;
 
 

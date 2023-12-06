@@ -5,24 +5,19 @@ using UnityEngine;
 public class PullPipe_PGW : MonoBehaviour
 {
     [SerializeField] private AirComponent_PGW theAirComponent;
-
     [SerializeField] private float rockAirForce = 0f;
+    [SerializeField] private bool blocked;
 
-    private bool blocked;
     private Rigidbody rockRigidbody;
 
     private void Awake()
     {
-        theAirComponent.rayLength = 7f;
-        theAirComponent.layerMask = 1 << 11;
+        theAirComponent.rayLength = 3f;
     }
-    private void OnDrawGizmos()
-    {
-        Debug.DrawRay(theAirComponent.rayStartPosition.position, transform.right * theAirComponent.rayLength, Color.blue);
-    }
+
     private void Update()
     {
-        if (Physics.Raycast(theAirComponent.rayStartPosition.position, transform.right, out theAirComponent.hit, theAirComponent.rayLength, theAirComponent.layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(theAirComponent.rayStartPosition.position, transform.right, out theAirComponent.hit, theAirComponent.rayLength, -1, QueryTriggerInteraction.Ignore))
         {
             if (theAirComponent.hit.transform.CompareTag("Rock"))
             {

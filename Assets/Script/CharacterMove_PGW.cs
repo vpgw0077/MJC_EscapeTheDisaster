@@ -24,6 +24,11 @@ public class CharacterMove_PGW : MonoBehaviour, IState_PGW<CharacterMove_PGW.pla
     [SerializeField] private Transform upperRayStartPos = null;
     [SerializeField] private float steepHeight = 0.3f;
     [SerializeField] private float steepSmooth = 0.1f;
+    [Space]
+    [Header("WallBlockCheckComponent")]
+    [SerializeField] private Transform wallBlockCheckPos = null;
+    [SerializeField] private float wallBlockRayLength = 0.7f;
+    [SerializeField] private PhysicMaterial frictionZero = null;
 
     private bool isGrounded = true;
     private bool isJumping = false;
@@ -39,7 +44,7 @@ public class CharacterMove_PGW : MonoBehaviour, IState_PGW<CharacterMove_PGW.pla
     private float acceleration => isGrounded ? 30f : 5f;
     private float jumpForce => theInteract.Carrying ? 5f : 10f;
     private float maxSpeed => PlayerState == playerState.Controlable ? 8f : 100f;
-    private float deceleration = 0.95f;
+    private float deceleration = 0.93f;
     private float maxSlope = 60f;
     private float fallingPeriod = 1f;
     private float fallingTimer = 0f;
@@ -60,6 +65,7 @@ public class CharacterMove_PGW : MonoBehaviour, IState_PGW<CharacterMove_PGW.pla
     private RaycastHit lowSteepRay;
     private RaycastHit upperSteepRay;
     private RaycastHit slopeRay;
+    private RaycastHit WallRay;
     private Animator anim;
 
     // Start is called before the first frame update
@@ -71,11 +77,13 @@ public class CharacterMove_PGW : MonoBehaviour, IState_PGW<CharacterMove_PGW.pla
         theCapsule = GetComponent<CapsuleCollider>();
         rb = GetComponent<Rigidbody>();
         upperRayStartPos.localPosition = new Vector3(upperRayStartPos.localPosition.x, steepHeight, upperRayStartPos.localPosition.z);
+        MenuManager_PGW.Respawn += RespawnPlayer;
     }
 
     // Update is called once per frame
     void Update()
     {
+
         CheckGround();
         CalculateMoveValue();
         FallingCheck();
@@ -103,8 +111,7 @@ public class CharacterMove_PGW : MonoBehaviour, IState_PGW<CharacterMove_PGW.pla
                 velY = Vector3.ClampMagnitude(velY, maxSpeedY);
 
                 rb.velocity = velXZ + velY;
-            }
-            StepUpSteep();
+            }            
 
         }
         else
@@ -116,9 +123,22 @@ public class CharacterMove_PGW : MonoBehaviour, IState_PGW<CharacterMove_PGW.pla
         {
             Jump();
         }
+        StepUpSteep();
+        BlockStuckWall();
 
     }
 
+    private void BlockStuckWall()
+    {
+        if(Physics.Raycast(wallBlockCheckPos.position, direction, out WallRay, wallBlockRayLength, 1, QueryTriggerInteraction.Ignore))
+        {
+            theCapsule.material = frictionZero;
+        }
+        else
+        {
+            theCapsule.material = null;
+        }
+    }
     private void FallingCheck()
     {
         if (!isGrounded && !isFalling)
@@ -154,17 +174,13 @@ public class CharacterMove_PGW : MonoBehaviour, IState_PGW<CharacterMove_PGW.pla
         if (IsSlope() || !isGrounded) return;
         if (Physics.Raycast(lowRayStartPos.position, direction, out lowSteepRay, 0.5f, 1, QueryTriggerInteraction.Ignore))
         {
-
-            if (!Physics.Raycast(upperRayStartPos.position, direction, out upperSteepRay, 0.5f, 1, QueryTriggerInteraction.Ignore))
+            
+            if (!Physics.Raycast(upperRayStartPos.position, direction, out upperSteepRay, 0.6f, 1, QueryTriggerInteraction.Ignore))
             {
-                rb.position = Vector3.Lerp(rb.position, rb.position + new Vector3(0f, steepHeight, 0f), Time.deltaTime / steepSmooth);
+                
+                rb.position += new Vector3(0, steepSmooth, 0f);
             }
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Debug.DrawRay(transform.position, Vector3.down, Color.red);
     }
 
     private void PlayWalkSound()
@@ -228,7 +244,12 @@ public class CharacterMove_PGW : MonoBehaviour, IState_PGW<CharacterMove_PGW.pla
 
 
     }
-
+    
+    private void RespawnPlayer()
+    {
+        rb.velocity = Vector3.zero;
+        transform.position = CheckPointInfo_PGW.currentCheckPoint.position;
+    }
     public IEnumerator ChangeState(playerState state, float duration)
     {
         yield return new WaitForSeconds(duration);

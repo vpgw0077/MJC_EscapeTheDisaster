@@ -7,19 +7,17 @@ public class IgnitableObject_PGW : Ignite_PGW
     [SerializeField] private GameObject parentObject = null;
 
     [SerializeField] private MeshRenderer objectMesh = null;
+
+    [SerializeField] private Material burningMaterial = null;
     [SerializeField] private Material igniteMaterial = null;
 
-    private bool isBurnOut = false;
 
-
+    private WaitForSeconds burnTime = new WaitForSeconds(7f);
     public override void Ignite()
     {
         base.Ignite();
-        if (!isBurnOut)
-        {
-            StartCoroutine(ChangeMaterial());
-
-        }
+        objectMesh.material = burningMaterial;
+        StartCoroutine(BurnOut());
 
     }
     public override void Extinguish()
@@ -34,20 +32,20 @@ public class IgnitableObject_PGW : Ignite_PGW
             particle.loop = false;
         }
         fireLight.SetActive(false);
+        objectMesh.material = igniteMaterial;
+    }
+
+    private IEnumerator BurnOut()
+    {
+        yield return burnTime;
         Rigidbody rb = parentObject.GetComponent<Rigidbody>();
-        if(rb == null)
+        if (rb == null)
         {
             parentObject.AddComponent<Rigidbody>();
         }
-    }
 
-    private IEnumerator ChangeMaterial()
-    {
-        yield return new WaitForSeconds(3f);
-        objectMesh.material = igniteMaterial;
-        isBurnOut = true;
-    }
 
+    }
 
 
 }
