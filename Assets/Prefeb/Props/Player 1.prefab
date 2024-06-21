@@ -347,6 +347,10 @@ GameObject:
   - component: {fileID: 6776927936813328519}
   - component: {fileID: 6776927938577392937}
   - component: {fileID: 6776927938577392938}
+  - component: {fileID: 4546775394466681872}
+  - component: {fileID: 2133457772775185206}
+  - component: {fileID: 7402058587630710160}
+  - component: {fileID: 2028756910005919120}
   - component: {fileID: 6776927938577392943}
   - component: {fileID: 6776927938577392936}
   - component: {fileID: 3144491335533935906}
@@ -427,6 +431,73 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &4546775394466681872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6776927936822680333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d87174110098e04d8e671ea6c5c43ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 10
+  carryingJumpForce: 5
+  groundAcceleration: 30
+  airAcceleration: 5
+  groundMaxSpeed: 8
+  airMaxSpeed: 10
+--- !u!114 &2133457772775185206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6776927936822680333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761ed0c251f5aeb4cb3b6fb0faed578f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioPlayer: {fileID: 3144491335533935907}
+  walkClip:
+  - {fileID: 8300000, guid: 00cfc0b914fb52b45ac7615e517a8337, type: 3}
+  - {fileID: 8300000, guid: 12f54c499bf0621498222ea1ecfe17b7, type: 3}
+  - {fileID: 8300000, guid: 080219c470fcb844ebd82c59220a1a75, type: 3}
+  - {fileID: 8300000, guid: 4790a201e75ab7049bf7e2271e859781, type: 3}
+  - {fileID: 8300000, guid: 45c8866d597cc83428ddd49e92eca73b, type: 3}
+--- !u!114 &7402058587630710160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6776927936822680333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbd970c6ec9b22a478c9bb2db70ec226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpKeyCode: 32
+  wallBlockCheckPos: {fileID: 3144491335556842722}
+  wallBlockRayLength: 0.7
+  frictionZero: {fileID: 13400000, guid: 2e27a0fdcf5cf934496e7938a9973629, type: 2}
+  frictionNormal: {fileID: 13400000, guid: 9de6d7a38b705c545ac918e02c48a7e0, type: 2}
+  isGrounded: 1
+--- !u!114 &2028756910005919120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6776927936822680333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe69b7d7804afe4786708c244f51929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6776927938577392943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,18 +510,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ec09a97ce3c8c4d9ed3c2b6659778e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioPlayer: {fileID: 3144491335533935907}
-  walkClip:
-  - {fileID: 8300000, guid: 00cfc0b914fb52b45ac7615e517a8337, type: 3}
-  - {fileID: 8300000, guid: 12f54c499bf0621498222ea1ecfe17b7, type: 3}
-  - {fileID: 8300000, guid: 080219c470fcb844ebd82c59220a1a75, type: 3}
-  - {fileID: 8300000, guid: 4790a201e75ab7049bf7e2271e859781, type: 3}
-  - {fileID: 8300000, guid: 45c8866d597cc83428ddd49e92eca73b, type: 3}
   PlayerState: 0
   lowRayStartPos: {fileID: 3144491337088807504}
   upperRayStartPos: {fileID: 3144491335759605382}
-  steepHeight: 0.3
-  steepSmooth: 0.1
+  steepHeight: 0.4
+  steepSmooth: 0.15
+  acceleration: 0
 --- !u!114 &6776927938577392936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,13 +531,14 @@ MonoBehaviour:
   rayStartPos: {fileID: 0}
   pickPosition: {fileID: 6776927937307539024}
   wallRayPos: {fileID: 3144491335556842722}
-  interactDistance: 10
-  throwForce: 500
+  interactDistance: 7
+  throwForce: 530
   objectMoveSpeed: 500
   maxCarryDistance: 5
   layermask:
     serializedVersion: 2
-    m_Bits: 22528
+    m_Bits: 107319
+  InteractText: {fileID: 0}
 --- !u!81 &3144491335533935906
 AudioListener:
   m_ObjectHideFlags: 0

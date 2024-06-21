@@ -20,9 +20,9 @@ public class CamController_PGW : MonoBehaviour
 
     private Transform myTransform = null;
     private Vector3 cameraTransformPosition;
-    private float targetPosition = 0f;
+    [SerializeField]private float targetPosition = 0f;
+    [SerializeField] private float distance;
     private float defaultPosition = 0f;
-    private float targetLookAngle = 0f;
     private float camLookAngle = 0f;
     private float pivotAngle = 0f;
 
@@ -37,7 +37,8 @@ public class CamController_PGW : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-    private void FixedUpdate()
+
+    private void FixedUpdate() // Update를 쓰면 지터링이 발생하기 때문에 Update를 쓰지 않음
     {
         if (!MenuManager_PGW.isStop)
         {
@@ -61,7 +62,6 @@ public class CamController_PGW : MonoBehaviour
 
     private void HandleTargetRotation()
     {
-        targetLookAngle += Input.GetAxis("Mouse X") * mouseSensitivity;
         targetTransform.rotation = Quaternion.Euler(0, camLookAngle, 0);
     }
     private void FollowTarget()
@@ -79,7 +79,12 @@ public class CamController_PGW : MonoBehaviour
         cameraPivotTransform.localRotation = Quaternion.Euler(pivotAngle, camLookAngle, 0);
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Vector3 direction = cameraTransform.position - cameraPivotTransform.position;
+        Debug.DrawRay(cameraTransform.position, cameraTransform.forward * 5 , Color.red);
+        Debug.DrawRay(cameraPivotTransform.position, direction * 5, Color.blue);
+    }
     private void HandleCameraCollision(float delta)
     {
         targetPosition = defaultPosition;
@@ -87,11 +92,10 @@ public class CamController_PGW : MonoBehaviour
         Vector3 direction = cameraTransform.position - cameraPivotTransform.position;
         direction.Normalize();
 
-
         if (Physics.SphereCast(cameraPivotTransform.position, cameraSphereRadius, direction, out hit, Mathf.Abs(targetPosition)))
         {
-            float dis = Vector3.Distance(cameraPivotTransform.position, hit.point);
-            targetPosition = -(dis - cameraCollisionOffset);
+            distance = Vector3.Distance(cameraPivotTransform.position, hit.point);
+            targetPosition = -(distance - cameraCollisionOffset); // 값이 음수인 이유는 카메라는 플레이어의 뒤쪽 즉 -z값을 가져야하므로
 
             Color temp = targetRender.sharedMaterial.color;
             temp.a = Mathf.Lerp(temp.a, 0.2f, 5 * Time.deltaTime);
