@@ -77,8 +77,8 @@ public class WallTrap_PGW : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerRigidbody = collision.transform.GetComponent<Rigidbody>();
-            IState_PGW<CharacterMove_PGW.playerState> state = collision.GetComponent<IState_PGW<CharacterMove_PGW.playerState>>();
-            StartCoroutine(state.ChangeState(CharacterMove_PGW.playerState.OutOfControl, 0));
+            IState_PGW<CharacterController_PGW.playerState> state = collision.GetComponent<IState_PGW<CharacterController_PGW.playerState>>();
+            StartCoroutine(state.ChangeState(CharacterController_PGW.playerState.OutOfControl, 0));
             detectPlayer = true;
         }
         else
@@ -98,8 +98,8 @@ public class WallTrap_PGW : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            IState_PGW<CharacterMove_PGW.playerState> state = other.GetComponent<IState_PGW<CharacterMove_PGW.playerState>>();
-            StartCoroutine(state.ChangeState(CharacterMove_PGW.playerState.Controlable, knockBackDuration));
+            IState_PGW<CharacterController_PGW.playerState> state = other.GetComponent<IState_PGW<CharacterController_PGW.playerState>>();
+            StartCoroutine(state.ChangeState(CharacterController_PGW.playerState.Controlable, knockBackDuration));
             detectPlayer = false;
         }
         else

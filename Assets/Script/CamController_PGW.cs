@@ -79,12 +79,6 @@ public class CamController_PGW : MonoBehaviour
         cameraPivotTransform.localRotation = Quaternion.Euler(pivotAngle, camLookAngle, 0);
     }
 
-    private void OnDrawGizmos()
-    {
-        Vector3 direction = cameraTransform.position - cameraPivotTransform.position;
-        Debug.DrawRay(cameraTransform.position, cameraTransform.forward * 5 , Color.red);
-        Debug.DrawRay(cameraPivotTransform.position, direction * 5, Color.blue);
-    }
     private void HandleCameraCollision(float delta)
     {
         targetPosition = defaultPosition;

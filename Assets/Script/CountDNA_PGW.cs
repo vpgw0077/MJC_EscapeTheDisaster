@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class CountDNA_PGW : MonoBehaviour
 {
-    [SerializeField] private MeshRenderer doorLamp = null;
-    [SerializeField] private Material redLamp = null;
-    [SerializeField] private Material greenLamp = null;
 
+    private ChangeLampColor_PGW lampColor = null;
+    private IUpdateDnaCount_PGW stage = null;
 
-    private StageClear_PGW stage;
+    private readonly int countValue = 1;
 
     private void Awake()
     {
-        stage = GetComponentInParent<StageClear_PGW>();
-        doorLamp.material = redLamp;
+        stage = GetComponentInParent<IUpdateDnaCount_PGW>();
+        lampColor = GetComponent<ChangeLampColor_PGW>();
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("VirusDNA"))
         {
-            doorLamp.material = greenLamp;
-            stage.IncreaseCount();
+            stage.UpdateDnaCount(countValue);
+            lampColor.ChangeLampColor(lampColor.greenLamp);
         }
     }
 
@@ -30,8 +30,8 @@ public class CountDNA_PGW : MonoBehaviour
     {
         if (other.transform.CompareTag("VirusDNA"))
         {
-            doorLamp.material = redLamp;
-            stage.DecreaseCount();
+            stage.UpdateDnaCount(-countValue);
+            lampColor.ChangeLampColor(lampColor.redLamp);
 
         }
     }

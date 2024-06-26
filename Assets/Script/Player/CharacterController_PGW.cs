@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterController_PGW : MonoBehaviour
+public class CharacterController_PGW : MonoBehaviour, IState_PGW<CharacterController_PGW.playerState>
 {
     [SerializeField] private KeyCode jumpKeyCode = KeyCode.Space;
+    [SerializeField] private KeyCode interactKeyCode = KeyCode.E;
+    [SerializeField] private KeyCode throwKeyCode = KeyCode.Mouse0;
     public enum playerState
     {
         Controlable,
@@ -32,7 +34,7 @@ public class CharacterController_PGW : MonoBehaviour
 
     private CapsuleCollider theCapsule = null;
 
-     private CharacterMove_PGW characterMove = null;
+    private CharacterMovement_PGW characterMove = null;
     private CharacterAnimation_PGW characterAnimation = null;
     private CharacterSound_PGW characterSound = null;
     private CharacterStatus_PGW characterStatus = null;
@@ -42,7 +44,7 @@ public class CharacterController_PGW : MonoBehaviour
 
     private void Awake()
     {
-        characterMove = GetComponent<CharacterMove_PGW>();
+        characterMove = GetComponent<CharacterMovement_PGW>();
         characterAnimation = GetComponent<CharacterAnimation_PGW>();
         characterSound = GetComponent<CharacterSound_PGW>();
         characterStatus = GetComponent<CharacterStatus_PGW>();
@@ -65,11 +67,24 @@ public class CharacterController_PGW : MonoBehaviour
             TryJump();
         }
 
+        if (Input.GetKeyDown(interactKeyCode))
+        {
+            interact.TryInteractObject();
+        }
+        else if (Input.GetKeyDown(throwKeyCode))
+        {
+            interact.TryThrowObject();
+        }
 
     }
     private void FixedUpdate()
     {
         characterMove.MoveCharacter(direction);
+        if (isGrounded)
+        {
+            characterMove.StepUpSteep(direction);
+
+        }
     }
 
     private void UpdateFootStepSound()
@@ -147,6 +162,12 @@ public class CharacterController_PGW : MonoBehaviour
             isGrounded = false;
         }
 
+    }
+
+    public IEnumerator ChangeState(playerState state, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        PlayerState = state;
     }
 
 }

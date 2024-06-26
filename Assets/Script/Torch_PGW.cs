@@ -15,10 +15,5 @@ public class Torch_PGW : MonoBehaviour
             FireEffect.SetActive(true);
             isOnFire = true;
         }
-
-        if(isOnFire && other.CompareTag("Barrel"))
-        {
-            other.gameObject.GetComponent<Explosion_PGW>().StartCoroutine("BoomWall");
-        }
     }
 }

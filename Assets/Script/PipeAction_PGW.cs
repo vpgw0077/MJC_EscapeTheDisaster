@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PipeAction_PGW : MonoBehaviour
 {
@@ -9,21 +10,23 @@ public class PipeAction_PGW : MonoBehaviour
     [SerializeField] private AudioClip pipeAudioClip = null;
 
     private Rigidbody rb;
-    private Interact_PGW thePickUp;
+    private Interact_PGW dropObject;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        thePickUp = FindObjectOfType<Interact_PGW>();
+        dropObject = FindObjectOfType<Interact_PGW>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PipeZone"))
         {
-            if (thePickUp.Carrying)
+
+            if (dropObject.Carrying && ReferenceEquals(dropObject.CarriedObject, gameObject))
             {
-                thePickUp.TryDrop();
+                dropObject.DropObject();
+
             }
             gameObject.transform.position = other.transform.position;
             gameObject.transform.rotation = other.transform.rotation;

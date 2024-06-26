@@ -16,7 +16,7 @@ public class RespawnObjectZone_PGW : MonoBehaviour
         {
             if (ReferenceEquals(theInteract.CarriedObject, pickUpObject.gameObject))
             {
-                theInteract.TryDrop();
+                theInteract.DropObject();
             }
             pickUpObject.RespawnObject();
         }

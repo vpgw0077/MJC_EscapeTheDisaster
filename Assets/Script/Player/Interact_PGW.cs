@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
-public class Interact_PGW : MonoBehaviour
+public class Interact_PGW : MonoBehaviour, IInteract_PGW, IPickUpObject_PGW
 {
     [Header("Transform")]
     [SerializeField] private Transform rayStartPos = null;
@@ -17,18 +16,16 @@ public class Interact_PGW : MonoBehaviour
     [SerializeField] private float maxCarryDistance = 5f;
 
     [SerializeField] private LayerMask layermask;
-    [Space]
-    [Header("UI")]
-    [SerializeField] private TextMeshProUGUI InteractText = null;
 
     private Collider carryObjectCollider;
     private Collider playerCollider;
     private RaycastHit hit;
     private RaycastHit wallHit;
-    private Rigidbody carryObjectRigidBody;
-
+    private Rigidbody carryObjectRigidbody;
     private Vector3 originPos = new Vector3(0f, 2f, 3f);
     private Vector3 changePos = new Vector3(0f, 4f, 0f);
+
+    private InteractUIController_PGW interactUI = null;
 
     private GameObject carriedObject;
     public GameObject CarriedObject
@@ -64,41 +61,42 @@ public class Interact_PGW : MonoBehaviour
     {
         pickPosition.localPosition = originPos;
         playerCollider = GetComponent<Collider>();
+        interactUI = GetComponent<InteractUIController_PGW>();
     }
 
+    public void TryInteractObject()
+    {
+        if (Carrying)
+        {
+            DropObject();
+
+        }
+
+
+        else if (!Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, layermask, QueryTriggerInteraction.Ignore))
+        {
+            if (Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, -1))
+            {
+                InteractObject();
+                PickUpObject();
+
+            }
+
+        }
+    }
+    public void TryThrowObject()
+    {
+        if (Carrying)
+        {
+            DropObject();
+            carryObjectRigidbody.AddForce(rayStartPos.forward * throwForce);
+
+        }
+    }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (Carrying)
-            {
-                TryDrop();
-
-            }
-
-
-            else if (!Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, layermask, QueryTriggerInteraction.Ignore))
-            {
-                if (Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, -1))
-                {
-                    TryInteract();
-
-                }
-
-            }
-        }
-
-        else if (Input.GetMouseButtonDown(0))
-        {
-            if (Carrying)
-            {
-                carryObjectRigidBody.AddForce(rayStartPos.forward * throwForce);
-                TryDrop();
-
-            }
-        }
         CheckInWall();
-        ShowInteractUI();
+        UpdateInteractUI();
     }
     private void FixedUpdate()
     {
@@ -107,33 +105,30 @@ public class Interact_PGW : MonoBehaviour
             AdjustObjectPosition();
         }
     }
-    private void ShowInteractUI()
+    private void UpdateInteractUI()
     {
 
         if (!Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, layermask, QueryTriggerInteraction.Ignore))
         {
             if (Physics.Raycast(rayStartPos.position, rayStartPos.forward, out hit, interactDistance, -1) && !Carrying)
             {
-                InteractText.gameObject.SetActive(true);
                 ObjectInfo_PGW objectInfo = hit.transform.GetComponentInParent<ObjectInfo_PGW>();
                 if (objectInfo != null)
                 {
-                    InteractText.text = objectInfo.ObjectName + "<color=yellow>" + "(E)" + "</color>";
+                    interactUI.ShowInteractUI(objectInfo);
                 }
 
             }
             else
             {
-                InteractText.text = "";
-                InteractText.gameObject.SetActive(false);
+                interactUI.HideInteractUI();
 
             }
 
         }
         else
         {
-            InteractText.text = "";
-            InteractText.gameObject.SetActive(false);
+            interactUI.HideInteractUI();
 
         }
 
@@ -153,55 +148,59 @@ public class Interact_PGW : MonoBehaviour
     private void AdjustObjectPosition()
     {
         Vector3 moveDirection = (pickPosition.transform.position - CarriedObject.transform.position);
-        carryObjectRigidBody.AddForce(moveDirection * objectMoveSpeed);
+        carryObjectRigidbody.AddForce(moveDirection * objectMoveSpeed);
         if (Vector3.Distance(CarriedObject.transform.position, pickPosition.transform.position) > maxCarryDistance)
         {
-            TryDrop();
+            DropObject();
         }
     }
 
-    private void TryInteract()
+    public void InteractObject()
+    {
+        ITrigger_PGW trigger = hit.collider.GetComponentInParent<ITrigger_PGW>();
+
+        if (trigger != null)
+        {
+            trigger.Trigger();
+
+        }
+
+    }
+
+    public void PickUpObject()
     {
         PickUpAbleObject_PGW pickUpObject = hit.collider.GetComponentInParent<PickUpAbleObject_PGW>();
-        ITrigger_PGW trigger = hit.collider.GetComponentInParent<ITrigger_PGW>();
         if (pickUpObject != null)
         {
 
-            carryObjectRigidBody = pickUpObject.GetComponentInParent<Rigidbody>();
+            carryObjectRigidbody = pickUpObject.GetComponentInParent<Rigidbody>();
             carryObjectCollider = pickUpObject.GetComponentInParent<Collider>();
             Physics.IgnoreCollision(playerCollider, carryObjectCollider, true);
 
             Carrying = true;
-            carryObjectRigidBody.constraints = RigidbodyConstraints.None;
-            carryObjectRigidBody.transform.position = pickPosition.position;
-            carryObjectRigidBody.useGravity = false;
-            carryObjectRigidBody.velocity = Vector3.zero;
-            carryObjectRigidBody.angularVelocity = Vector3.zero;
-            carryObjectRigidBody.drag = 20f;
-            carryObjectRigidBody.angularDrag = 1f;
+            carryObjectRigidbody.constraints = RigidbodyConstraints.None;
+            carryObjectRigidbody.transform.position = pickPosition.position;
+            carryObjectRigidbody.useGravity = false;
+            carryObjectRigidbody.velocity = Vector3.zero;
+            carryObjectRigidbody.angularVelocity = Vector3.zero;
+            carryObjectRigidbody.drag = 20f;
+            carryObjectRigidbody.angularDrag = 1f;
             CarriedObject = pickUpObject.gameObject;
 
         }
 
-        else if (trigger != null)
-        {
-            trigger.Trigger();
-        }
-
     }
 
-    public void TryDrop()
+    public void DropObject()
     {
         Physics.IgnoreCollision(playerCollider, carryObjectCollider, false);
         Carrying = false;
-        carryObjectRigidBody.useGravity = true;
-        carryObjectRigidBody.drag = 0f;
-        carryObjectRigidBody.angularDrag = 0.05f;
-        carryObjectRigidBody.velocity = Vector3.zero;
+        carryObjectRigidbody.useGravity = true;
+        carryObjectRigidbody.drag = 0f;
+        carryObjectRigidbody.angularDrag = 0.05f;
+        carryObjectRigidbody.velocity = Vector3.zero;
         CarriedObject = null;
 
-
     }
-
 }
 

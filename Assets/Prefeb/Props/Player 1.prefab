@@ -353,6 +353,7 @@ GameObject:
   - component: {fileID: 2028756910005919120}
   - component: {fileID: 6776927938577392943}
   - component: {fileID: 6776927938577392936}
+  - component: {fileID: 982502367403432298}
   - component: {fileID: 3144491335533935906}
   - component: {fileID: 3144491335533935907}
   m_Layer: 10
@@ -481,11 +482,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpKeyCode: 32
+  interactKeyCode: 101
+  throwKeyCode: 323
   wallBlockCheckPos: {fileID: 3144491335556842722}
   wallBlockRayLength: 0.7
   frictionZero: {fileID: 13400000, guid: 2e27a0fdcf5cf934496e7938a9973629, type: 2}
   frictionNormal: {fileID: 13400000, guid: 9de6d7a38b705c545ac918e02c48a7e0, type: 2}
-  isGrounded: 1
 --- !u!114 &2028756910005919120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,12 +512,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ec09a97ce3c8c4d9ed3c2b6659778e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerState: 0
   lowRayStartPos: {fileID: 3144491337088807504}
   upperRayStartPos: {fileID: 3144491335759605382}
   steepHeight: 0.4
   steepSmooth: 0.15
-  acceleration: 0
 --- !u!114 &6776927938577392936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,6 +538,18 @@ MonoBehaviour:
   layermask:
     serializedVersion: 2
     m_Bits: 107319
+--- !u!114 &982502367403432298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6776927936822680333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b040d509e9f24045a58b084469a9237, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   InteractText: {fileID: 0}
 --- !u!81 &3144491335533935906
 AudioListener:
