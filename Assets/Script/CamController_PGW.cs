@@ -16,20 +16,20 @@ public class CamController_PGW : MonoBehaviour
     [SerializeField] private float maximumPivot = 35;
     [SerializeField] private float cameraSphereRadius = 0.2f;
     [SerializeField] private float cameraCollisionOffset = 0.2f;
-    [SerializeField] private float minimumCollisionOffset = 0.2f;
+    [SerializeField] private float minimumCollisionOffset = 0.2f; // 플레이어와 카메라의 최소거리
 
     private Transform myTransform = null;
     private Vector3 cameraTransformPosition;
-    [SerializeField]private float targetPosition = 0f;
+    [SerializeField]private float targetDistance = 0f;
     [SerializeField] private float distance;
-    private float defaultPosition = 0f;
+    private float defaultDistance = 0f;
     private float camLookAngle = 0f;
     private float pivotAngle = 0f;
 
     private void Awake()
     {
         myTransform = transform;
-        defaultPosition = cameraTransform.localPosition.z;
+        defaultDistance = cameraTransform.localPosition.z;
     }
 
     private void Start()
@@ -81,45 +81,26 @@ public class CamController_PGW : MonoBehaviour
 
     private void HandleCameraCollision(float delta)
     {
-        targetPosition = defaultPosition;
+        targetDistance = defaultDistance;
         RaycastHit hit;
         Vector3 direction = cameraTransform.position - cameraPivotTransform.position;
         direction.Normalize();
 
-        if (Physics.SphereCast(cameraPivotTransform.position, cameraSphereRadius, direction, out hit, Mathf.Abs(targetPosition)))
+        if (Physics.SphereCast(cameraPivotTransform.position, cameraSphereRadius, direction, out hit, Mathf.Abs(targetDistance)))
         {
             distance = Vector3.Distance(cameraPivotTransform.position, hit.point);
-            targetPosition = -(distance - cameraCollisionOffset); // 값이 음수인 이유는 카메라는 플레이어의 뒤쪽 즉 -z값을 가져야하므로
-
-            Color temp = targetRender.sharedMaterial.color;
-            temp.a = Mathf.Lerp(temp.a, 0.2f, 5 * Time.deltaTime);
-
-            targetRender.sharedMaterial.color = temp;
-
-
+            targetDistance = -(distance - cameraCollisionOffset); // 값이 음수인 이유는 카메라는 플레이어의 뒤쪽 즉 -z값을 가져야하므로
+                                                                  // cameraCollisionOffset이 클수록 카메라가 플레이어에 더 가까워짐
 
         }
-        else
+
+
+        if (Mathf.Abs(targetDistance) < minimumCollisionOffset)
         {
-            if (targetRender.sharedMaterial.color.a <= 0.99f)
-            {
-                Color temp = targetRender.sharedMaterial.color;
-                temp.a = Mathf.Lerp(temp.a, 1, 5 * Time.deltaTime);
-
-                targetRender.sharedMaterial.color = temp;
-            }
+            targetDistance = -minimumCollisionOffset;
 
         }
-
-
-        if (Mathf.Abs(targetPosition) < minimumCollisionOffset)
-        {
-            targetPosition = -minimumCollisionOffset;
-
-
-
-        }
-        cameraTransformPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, delta / 0.2f);
+        cameraTransformPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetDistance, delta / 0.2f);
         cameraTransform.localPosition = cameraTransformPosition;
 
     }
