@@ -22,16 +22,7 @@ public class IgnitableObject_PGW : Ignite_PGW
     }
     public override void Extinguish()
     {
-        if (!isIgnite) return;
-
-        isIgnite = false;
-        theAudioSource.Stop();
-        for (int i = 0; i < fireParticle.Length; i++)
-        {
-            var particle = fireParticle[i].main;
-            particle.loop = false;
-        }
-        fireLight.SetActive(false);
+        base.Extinguish();
         objectMesh.material = igniteMaterial;
     }
 

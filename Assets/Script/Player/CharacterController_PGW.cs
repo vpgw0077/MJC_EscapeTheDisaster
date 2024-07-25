@@ -103,6 +103,8 @@ public class CharacterController_PGW : MonoBehaviour, IState_PGW<CharacterContro
     }
     private void CalculateMoveValue()
     {
+        if (PlayerState == playerState.OutOfControl) return;
+
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
 

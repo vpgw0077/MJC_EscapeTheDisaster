@@ -16,5 +16,6 @@ public class IgniteMoss_PGW : Ignite_PGW
         yield return new WaitForSeconds(5f);
         Extinguish();
         Destroy(moss);
+        Destroy(gameObject);
     }
 }
