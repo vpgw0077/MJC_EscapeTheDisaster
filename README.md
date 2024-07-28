@@ -25,4 +25,9 @@
 
 ![213-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/5d997f26-65c3-47b3-8525-87baabb479f6)
 
+|![cv](https://github.com/user-attachments/assets/bc25bdb4-5c10-4bcf-883d-25153e8cb65e)|![sv](https://github.com/user-attachments/assets/86752802-af07-488d-a673-af3817002bec)|![vd](https://github.com/user-attachments/assets/88a5cf9b-e7ab-4816-8111-5b80889ca9a2)| ![v](https://github.com/user-attachments/assets/b49c1020-7f2c-4a2b-8929-14639ce3b77a)|
+| :---: |:---:|:---:|:---:|
+|WASD| Space |E|Left Mouse|
+
+
 
