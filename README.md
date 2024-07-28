@@ -1,1 +1,11 @@
-# MJC_EscapeTheDisaster
+# Escape Disaster
+
+## 개요
+- 프로젝트 이름 : Escape Disaster
+- 장르 : 퍼즐, 3인칭, 싱글플레이
+- 개발 도구 : Unity ver.2018.4.22f1, C#
+- 개발 인원 : 3명
+- 담당 역할 : 게임 기획, 핵심 기능 개발, 레벨 디자인
+
+## 프로젝트 설명
+Escape Disaster는 스테이지에 있는 주변 오브젝트와 장치들을 활용해 바이러스를 모두 제거해 스테이지를 클리어하는 퍼즐 게임입니다. 
