@@ -25,9 +25,10 @@
 
 ![213-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/5d997f26-65c3-47b3-8525-87baabb479f6)
 
-|![cv](https://github.com/user-attachments/assets/bc25bdb4-5c10-4bcf-883d-25153e8cb65e)|![sv](https://github.com/user-attachments/assets/86752802-af07-488d-a673-af3817002bec)|![vd](https://github.com/user-attachments/assets/88a5cf9b-e7ab-4816-8111-5b80889ca9a2)| ![v](https://github.com/user-attachments/assets/b49c1020-7f2c-4a2b-8929-14639ce3b77a)|
+|일반 바이러스| 슈퍼 바이러스 |바이러스 DNA|백신|
 | :---: |:---:|:---:|:---:|
-|WASD| Space |E|Left Mouse|
+|![cv](https://github.com/user-attachments/assets/41f9061e-ad4a-4b33-8092-8cab1815aa8a)|![sv](https://github.com/user-attachments/assets/41dc53ad-a45a-4916-85b1-827b7aa0926d)|![vd](https://github.com/user-attachments/assets/88a5cf9b-e7ab-4816-8111-5b80889ca9a2)|![v](https://github.com/user-attachments/assets/512b1c0a-d501-47c8-8c11-66c7ea068f71)|
+|| 백신 오브젝트와<br>닿으면 사라진다. |문을 열 수 있는 열쇠||
 
 
 
