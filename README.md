@@ -40,3 +40,7 @@
 ![_2024_07_29_20_46_35_325-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/fce5a89f-95af-47d1-8675-2a4a165caf4b)
 
 - 함정 발판 : 센서에 무언가가 감지되면 함정 벽이 발동한다.
+  
+![_2024_07_29_20_50_16_423-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/2497346e-f12e-494b-a8fd-af95b78f3f41)
+
+- 전선 파이프 : 문을 열거나 동력을 연결하는 등의 역할을 하는 오브젝트
