@@ -53,5 +53,7 @@
 ![_2024_07_29_21_15_47_92-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/2ac133fd-0842-411a-ae0f-9894bcbf1477)
 
 - 바람 하수구 : 오브젝트를 위로 띄워주는 장치로 다른 하수구를 막으면 나머지 하수구의 풍력이 세지는 매커니즘을 가지고 있음.
-|일반 바이러스| 슈퍼 바이러스 |바이러스 DNA|백신|
-| :---: |:---:|:---:|:---:|
+  
+|![_2024_07_29_21_46_49_671-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/c81aa39b-0178-48a1-935a-bfea70222831)|![_2024_07_29_21_47_12_959-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/4ec8375f-a3d7-4961-9318-732e0c6e1525)| ![_2024_07_29_21_47_33_587-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/f447b418-3489-45bf-9195-51611fe374d7) |
+| :---: |:---:|:---:|
+|0개 막았을 때|1개 막았을 때|3개 막았을 때|
