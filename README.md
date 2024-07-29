@@ -1,8 +1,8 @@
-# Escape Disaster
+# Escape The Disaster
 ![캡처](https://github.com/user-attachments/assets/0198f50c-d308-4e7b-bb91-9492f9f9902f)
 
 ## 개요
-- 프로젝트 이름 : Escape Disaster
+- 프로젝트 이름 : Escape The Disaster
 - 장르 : 퍼즐, 3인칭, 싱글플레이
 - 개발 도구 : Unity ver.2018.4.22f1, C#
 - 개발 인원 : 3명
@@ -14,7 +14,7 @@
 
 ## 프로젝트 설명
 - 플레이어는 바이러스로 인해 황폐화 된 도시를 정화하는 로봇이 되어 난관을 헤쳐나가야 합니다!
-- Escape Disaster는 스테이지에 있는 주변 오브젝트와 장치들을 활용해 바이러스를 모두 제거해 스테이지를 클리어하는 퍼즐 게임입니다.
+- Escape The Disaster는 스테이지에 있는 주변 오브젝트와 장치들을 활용해 바이러스를 모두 제거해 스테이지를 클리어하는 퍼즐 게임입니다.
 - 총 10개의 스테이지로 구성되어 있으며 멀티 플레잉은 지원하지 않습니다.
 
 ## 인 게임 요소
