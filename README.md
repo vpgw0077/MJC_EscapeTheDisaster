@@ -34,7 +34,8 @@
 |![cv](https://github.com/user-attachments/assets/41f9061e-ad4a-4b33-8092-8cab1815aa8a)|![sv](https://github.com/user-attachments/assets/41dc53ad-a45a-4916-85b1-827b7aa0926d)|![vd](https://github.com/user-attachments/assets/88a5cf9b-e7ab-4816-8111-5b80889ca9a2)|![v](https://github.com/user-attachments/assets/512b1c0a-d501-47c8-8c11-66c7ea068f71)|
 |백신, 플레이어와<br>닿으면 사라진다.| 백신 오브젝트와<br>닿으면 사라진다. |문을 열 수 있는 열쇠|바이러스를 없앨 수 있는<br>오브젝트|
 
-#### 퍼즐 요소
+#### 퍼즐 요소 몇 가지
+
 - 불을 이용한 퍼즐 : 특정 오브젝트에 불을 붙여 스테이지를 공략 해야한다.
 
 ![_2024_07_29_20_46_35_325-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/fce5a89f-95af-47d1-8675-2a4a165caf4b)
@@ -44,3 +45,10 @@
 ![_2024_07_29_20_50_16_423-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/2497346e-f12e-494b-a8fd-af95b78f3f41)
 
 - 전선 파이프 : 문을 열거나 동력을 연결하는 등의 역할을 하는 오브젝트
+  
+![_2024_07_29_20_54_47_43-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/a5ea4cbe-532a-45cb-af45-719e66c86fe9)
+
+- 파란 푸쉬 파이프 : 오브젝트를 밀어내는 바람을 발사하는 장치
+  
+![_2024_07_29_21_15_47_92-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/2ac133fd-0842-411a-ae0f-9894bcbf1477)
+
