@@ -37,4 +37,6 @@
 #### 퍼즐 요소
 - 불을 이용한 퍼즐 : 특정 오브젝트에 불을 붙여 스테이지를 공략 해야한다.
 
+![_2024_07_29_20_46_35_325-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/fce5a89f-95af-47d1-8675-2a4a165caf4b)
 
+- 함정 발판 : 센서에 무언가가 감지되면 함정 벽이 발동한다.
